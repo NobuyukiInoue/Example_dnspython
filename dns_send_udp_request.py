@@ -37,15 +37,15 @@ def main():
     data_send = set_data(1, resolvstring, recordtype)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    # UDPパケット送信
+    # send a DNS udp request.
     s.sendto(data_send, (dnsserver, PORT))
     time_start = time.time()
 
-    # UDPパケット受信
+    # recv a DNS udp response.
     data_recv, address = s.recvfrom(8192)
     time_end = time.time()
 
-    # 受信結果の表示
+    # display results.
     print("============================================================\n"
           "Reply from %s:%s, length = 0x%04x(%d) byte.\n"
           "Response time ... : %f[ms]\n"
@@ -148,7 +148,7 @@ def get_type(int_type):
     RFC 1035
     https://www.ietf.org/rfc/rfc1035.txt
 
-    Wikipedia - DNSレコードタイプの一覧
+    Wikipedia - List of DNS record type
     https://ja.wikipedia.org/wiki/DNS%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%97%E3%81%AE%E4%B8%80%E8%A6%A7
     """
     if int_type == 255:
