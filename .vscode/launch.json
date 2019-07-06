@@ -1,0 +1,197 @@
+{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+
+        {
+            "name": "Python: Current File (Integrated Terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: hackerzlab.com soa",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "hackerzlab.com", "soa"
+            ]
+        },
+        {
+            "name": "Python: www.hackerzlab.com a",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "www.hackerzlab.com", "a"
+            ]
+        },
+        {
+            "name": "Python: hackerzlab.com a",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "hackerzlab.com", "a"
+            ]
+        },
+        {
+            "name": "Python: www.asahi.com cname",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "www.asahi.com", "cname"
+            ]
+        },
+        {
+            "name": "Python: hackerzlab.com ns",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "hackerzlab.com", "ns"
+            ]
+        },
+        {
+            "name": "Python: hackerzlab.com mx",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "hackerzlab.com", "mx"
+            ]
+        },
+        {
+            "name": "Python: or.jp ns",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "or.jp", "ns"
+            ]
+        },
+        {
+            "name": "Python: hackerzlab.com ns true",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "hackerzlab.com", "ns", "true"
+            ]
+        },
+        {
+            "name": "Python: 8.8.8.8 ptr",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "8.8.8.8", "ptr"
+            ]
+        },
+        {
+            "name": "Python: 10.1.1.254 hackerzlab.com",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "10.1.1.254", "hackerzlab.com"
+            ]
+        },
+        {
+            "name": "Python: 10.1.1.254 hackerzlab.com ns",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "10.1.1.254", "hackerzlab.com", "ns"
+            ]
+        },
+        {
+            "name": "Python: 10.1.1.254 hackerzlab.com mx",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "10.1.1.254", "hackerzlab.com", "mx"
+            ]
+        },
+        {
+            "name": "Python: 10.1.1.254 . ns",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "10.1.1.254", ".", "ns"
+            ]
+        },
+        {
+            "name": "Python: 192.168.100.1 .",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "192.168.100.1", "."
+            ]
+        },
+        {
+            "name": "Python: 10.1.1.254 or.jp",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "10.1.1.254", "or.jp"
+            ]
+        },
+        {
+            "name": "Python: 10.1.1.254 jp",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "10.1.1.254", "jp"
+            ]
+        },
+        {
+            "name": "Python: 192.168.100.1 or.jp",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "192.168.100.1", "or.jp"
+            ]
+        },
+        {
+            "name": "Python: 192.168.100.1 52.1.1.1 ptr",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "192.168.100.1", "52.1.1.1", "ptr"
+            ]
+        }
+    ]
+}
