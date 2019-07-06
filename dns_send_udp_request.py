@@ -33,6 +33,10 @@ def main():
 
     dnsserver = argv[1]
     PORT = 53
+    print("============================================================\n"
+          "DNS Server    = %s:%d\n"
+          "resolv string = %s\n" 
+          "record type   = %s" %(dnsserver, PORT, resolvstring, recordtype))
 
     data_send = set_data(1, resolvstring, recordtype)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
