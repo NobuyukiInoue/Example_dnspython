@@ -6,6 +6,7 @@
     "configurations": [
 
 
+
         {
             "name": "Python: Current File (Integrated Terminal)",
             "type": "python",
@@ -191,6 +192,16 @@
             "console": "integratedTerminal",
             "args":[
                 "192.168.100.1", "52.1.1.1", "ptr"
+            ]
+        },
+        {
+            "name": "Python: 192.168.1.1 amazon.com txt",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "192.168.1.1", "amazon.com", "txt"
             ]
         }
     ]
