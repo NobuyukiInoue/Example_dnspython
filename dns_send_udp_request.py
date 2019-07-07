@@ -551,12 +551,12 @@ def get_Signature(data, i, size):
 
 
 def print_result(target_str):
-    print("                   ", end = "")
+    print("                     ", end = "")
     col = 1
     for i in range(len(target_str)):
         if col % 16 == 0:
-            print(" %02x" %ord(target_str[i]))
-            print("                   ", end = "")
+            print(" %02x\n"
+                  "                     " %ord(target_str[i]), end = "")
         else:
             print(" %02x" %ord(target_str[i]), end = "")
         col += 1
@@ -564,12 +564,12 @@ def print_result(target_str):
 
 
 def print_result_bin(target_str):
-    print("                   ", end = "")
+    print("                     ", end = "")
     col = 1
     for i in range(len(target_str)):
         if col % 16 == 0:
-            print(" %02x" %ord(chr(target_str[i])))
-            print("                   ", end = "")
+            print(" %02x\n"
+                  "                     " %ord(target_str[i]), end = "")
         else:
             print(" %02x" %ord(chr(target_str[i])), end = "")
         col += 1
