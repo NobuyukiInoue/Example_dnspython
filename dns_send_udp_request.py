@@ -492,6 +492,8 @@ def get_answer(data, i):
             print("%04x:   Domain Name: %s" %(i_current, result))
 
         else:
+            fld_other = data[i:i + fld_data_length]
+            print("%04x:   Data: %s" %(i, fld_other))
             i += fld_data_length
 
 
