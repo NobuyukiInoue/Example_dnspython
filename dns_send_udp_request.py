@@ -141,6 +141,8 @@ def set_type(type):
         return 0x0010.to_bytes(2, 'big')
     elif type == 'AAAA':
         return 0x001c.to_bytes(2, 'big')
+    elif type == 'DS':
+        return 0x002b.to_bytes(2, 'big')
     elif type == 'RRSIG':
         return 0x002e.to_bytes(2, 'big')
     else:
@@ -452,7 +454,7 @@ def get_answer(data, i):
             print("%04x:   Algorithm: 0x%04x(%s)" %(i, fld_Algorithm, get_algorithm(fld_Algorithm)[0]))
             i += 1
 
-            fld_public_key_length = fld_data_length - (i - i_start) + 1
+            fld_public_key_length = fld_data_length - (i - i_start)
             fld_public_key = data[i:i + fld_public_key_length]
             print("%04x:   Public Key:" %i)
             print_result_bin(fld_public_key)
@@ -473,10 +475,10 @@ def get_answer(data, i):
             i += 1
 
             print("%04x:   Public Key:" %i)
-            fld_Public_Key_size = fld_data_length - (i_start - i) + 1
-            fld_public_key = data[i:i + fld_Public_Key_size]
-            print_result(fld_public_key)
-            i += fld_public_key_length
+            fld_Public_Key_size = fld_data_length - (i_start - i)
+            fld_Public_Key = data[i:i + fld_Public_Key_size]
+            print_result_bin(fld_Public_Key)
+            i += fld_Public_Key_size
 
         elif type_name == "AAAA":
             print("%04x:   Addr:         %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x" %(i,
@@ -569,7 +571,7 @@ def print_result_bin(target_str):
     for i in range(len(target_str)):
         if col % 16 == 0:
             print(" %02x\n"
-                  "                     " %ord(target_str[i]), end = "")
+                  "                     " %ord(chr(target_str[i])), end = "")
         else:
             print(" %02x" %ord(chr(target_str[i])), end = "")
         col += 1
