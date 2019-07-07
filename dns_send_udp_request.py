@@ -463,19 +463,19 @@ def get_answer(data, i):
         elif type_name == "DS":
             i_start = i
             fld_Key_id = (data[i] << 8) + data[i + 1]
-            print("%04x:   Key_id:     0x%04x(%d)" %(i, fld_Key_id, fld_Key_id))
+            print("%04x:   Key_id:       0x%04x(%d)" %(i, fld_Key_id, fld_Key_id))
             i += 2
 
             fld_Algorithm = data[i]
-            print("%04x:   Algorithm:  0x%04x(%s)" %(i, fld_Algorithm, get_algorithm(fld_Algorithm)[0]))
+            print("%04x:   Algorithm:    0x%02x(%s)" %(i, fld_Algorithm, get_algorithm(fld_Algorithm)[0]))
             i += 1
 
             fld_Digest_type = data[i]
-            print("%04x:   Digest type: 0x%04x(%d)" %(i, fld_Digest_type, fld_Digest_type))
+            print("%04x:   Digest type:  0x%02x(%d)" %(i, fld_Digest_type, fld_Digest_type))
             i += 1
 
             print("%04x:   Public Key:" %i)
-            fld_Public_Key_size = fld_data_length - (i_start - i)
+            fld_Public_Key_size = fld_data_length - (i_start - i) + 1
             fld_Public_Key = data[i:i + fld_Public_Key_size]
             print_result_bin(fld_Public_Key)
             i += fld_Public_Key_size
