@@ -306,7 +306,7 @@ def print_flags(flags):
     elif RA == 1:
         print("        RA(%d)     ... Recursion Available is False" %RD)
 
-    Reserve = (flags & 0x0030) >> 7
+    Reserve = (flags & 0x0030) >> 4
     print("        Reserve(%d)" %Reserve)
 
     RCODE = (flags & 0x0003)
