@@ -452,7 +452,7 @@ def get_answer(data, i):
             signature_size = fld_data_length - (i - i_start)
 
             i_current = i
-            i, result = get_Signature(data, i, signature_size)
+            i, result = get_signature(data, i, signature_size)
             print("%04x:   Signature:   " %i_current, end = "")
             print_result(result)
 
@@ -559,7 +559,7 @@ def get_name(data, i):
     return i, result
 
 
-def get_Signature(data, i, size):
+def get_signature(data, i, size):
     result = ""
     max_i = i + size
     while i < max_i:
@@ -587,7 +587,6 @@ def print_result_bin(target_str):
         else:
             print(" %02x" %ord(chr(target_str[i])), end = "")
         col += 1
-
     print()
 
 
