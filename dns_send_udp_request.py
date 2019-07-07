@@ -48,6 +48,7 @@ def main():
     # recv a DNS udp response.
     data_recv, address = s.recvfrom(8192)
     time_end = time.time()
+    s.close()
 
     # display results.
     print("============================================================\n"
@@ -55,9 +56,9 @@ def main():
           "Response time ... : %f[ms]\n"
           "============================================================"
             %(address[0], address[1], len(data_recv), len(data_recv), (time_end - time_start)*1000))
-    print_recv_data(data_recv)
 
-    s.close()
+    print_recv_data(data_recv)
+    print("============================================================")
 
 
 def exit_data_send(argv0):
@@ -213,6 +214,21 @@ def get_algorithm(byte_algorithm):
         return ("SHA512", 512)
     else:
         return ("", 0)
+
+
+def get_digest_type(digest_type):
+    if digest_type == 0:
+        return "Reserved"
+    if digest_type == 1:
+        return "SHA1"
+    if digest_type == 2:
+        return "SHA256"
+    if digest_type == 3:
+        return "GOST R 34.11-94"
+    if digest_type == 4:
+        return "SHA-384"
+    else:
+        return "Unassigned"
 
 
 def print_recv_data(data):
@@ -426,18 +442,18 @@ def get_answer(data, i):
             i += 4
 
             fld_Id_of_signing_key = (data[i] << 8) + data[i + 1]
-            print("%04x:   Id of signing key:  0x%08x(%d)" %(i, fld_Id_of_signing_key, fld_Id_of_signing_key))
+            print("%04x:   Id of signing key:0x%08x(%d)" %(i, fld_Id_of_signing_key, fld_Id_of_signing_key))
             i += 2
 
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:   Signer's name: %s" %(i_current, result))
+            print("%04x:   Signer's name:%s" %(i_current, result))
 
             signature_size = fld_data_length - (i - i_start)
 
             i_current = i
             i, result = get_Signature(data, i, signature_size)
-            print("%04x:   Signature: " %i_current)
+            print("%04x:   Signature:   " %i_current, end = "")
             print_result(result)
 
         elif type_name == "DNSKEY":
@@ -471,11 +487,11 @@ def get_answer(data, i):
             i += 1
 
             fld_Digest_type = data[i]
-            print("%04x:   Digest type:  0x%02x(%d)" %(i, fld_Digest_type, fld_Digest_type))
+            print("%04x:   Digest type:  0x%02x(%s)" %(i, fld_Digest_type, get_digest_type(fld_Digest_type)))
             i += 1
 
-            print("%04x:   Public Key:" %i)
-            fld_Public_Key_size = fld_data_length - (i_start - i) + 1
+            print("%04x:   Digest:      " %i, end = "")
+            fld_Public_Key_size = fld_data_length - (i - i_start)
             fld_Public_Key = data[i:i + fld_Public_Key_size]
             print_result_bin(fld_Public_Key)
             i += fld_Public_Key_size
@@ -553,12 +569,10 @@ def get_Signature(data, i, size):
 
 
 def print_result(target_str):
-    print("                     ", end = "")
-    col = 1
+    col = 0
     for i in range(len(target_str)):
-        if col % 16 == 0:
-            print(" %02x\n"
-                  "                     " %ord(target_str[i]), end = "")
+        if col % 16 == 0 and col >= 16:
+            print("\n                      %02x" %ord(target_str[i]), end = "")
         else:
             print(" %02x" %ord(target_str[i]), end = "")
         col += 1
@@ -566,15 +580,14 @@ def print_result(target_str):
 
 
 def print_result_bin(target_str):
-    print("                     ", end = "")
-    col = 1
+    col = 0
     for i in range(len(target_str)):
-        if col % 16 == 0:
-            print(" %02x\n"
-                  "                     " %ord(chr(target_str[i])), end = "")
+        if col % 16 == 0 and col >= 16:
+            print("\n                      %02x" %ord(chr(target_str[i])), end = "")
         else:
             print(" %02x" %ord(chr(target_str[i])), end = "")
         col += 1
+
     print()
 
 
