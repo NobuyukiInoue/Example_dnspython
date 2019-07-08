@@ -535,11 +535,14 @@ def get_answer(data, i):
         elif type_name == "PTR":
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:   %12s %s" %(i_current, "Domain Name:", result))
+            result_length = i - i_current
+            format_str = "%04x: %0" + str(2*result_length) + "x %12s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big') ,"Domain Name:", result))
 
         else:
             fld_other = data[i:i + fld_data_length]
-            print("%04x:   %12s %s" %(i, "Data:", fld_other))
+            format_str = "%04x: %0" + str(2*fld_data_length) + "x %12s %s"
+            print(format_str %(i, int.from_bytes(fld_other, 'big'), "Data:", fld_other))
             i += fld_data_length
 
 
