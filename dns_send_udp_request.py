@@ -282,59 +282,69 @@ def print_recv_data(data):
 
 def print_flags(flags):
     QR = (flags & 0x8000) >> 15
+    label = "[15]    QR"
     if QR == 0:
-        print("%24s %s(%d)     ... Query" %("", "QR", QR))
+        print("%21s %s(%d)      ... Query" %("", label, QR))
     elif QR == 1:
-        print("%24s %s(%d)     ... Response" %("", "QR", QR))
+        print("%21s %s(%d)      ... Response" %("", label, QR))
 
     OPCODE = (flags & 0x7800) >> 11
+    label = "[14-11] OPCODE"
     if OPCODE == 0:
-        print("%24s %s(%d) ... standard query" %("", "OPCODE", OPCODE))
+        print("%21s %s(%d)  ... standard query" %("", label, OPCODE))
     elif OPCODE == 1:
-        print("%24s %s(%d) ... inverse query" %("", "OPCODE", OPCODE))
+        print("%21s %s(%d)  ... inverse query" %("", label, OPCODE))
     elif OPCODE == 2:
-        print("%24s %s(%d) ... server status request" %("", "OPCODE", OPCODE))
+        print("%21s %s(%d)  ... server status request" %("", label, OPCODE))
 
     AA = (flags & 0x0400) >> 10
+    label = "[10]    AA"
     if AA == 0:
-        print("%24s %s(%d)     ... Not Authoritative" %("", "AA", AA))
+        print("%21s %s(%d)      ... Not Authoritative" %("", label, AA))
     elif AA == 1:
-        print("%24s %s(%d)     ... Authoritative" %("", "AA", AA))
+        print("%21s %s(%d)      ... Authoritative" %("", label, AA))
 
     TC = (flags & 0x0200) >> 9
+    label = "[9]     TC"
     if TC == 0:
-        print("%24s %s(%d)     ... Did not Flagment" %("", "TC", TC))
+        print("%21s %s(%d)      ... Did not Flagment" %("", label, TC))
     elif TC == 1:
-        print("%24s %s(%d)     ... Flagment occur" %("", "TC", TC))
+        print("%21s %s(%d)      ... Flagment occur" %("", label, TC))
 
     RD = (flags & 0x0100) >> 8
+    label = "[8]     RD"
     if RD == 0:
-        print("%24s %s(%d)     ... Recursion Query" %("", "RD", RD))
+        print("%21s %s(%d)      ... Recursion Query" %("", label, RD))
     elif RD == 1:
-        print("%24s %s(%d)     ... Repeat Query" %("", "RD", RD))
+        print("%21s %s(%d)      ... Repeat Query" %("", label, RD))
 
     RA = (flags & 0x0080) >> 7
+    label = "[7]     RA"
     if RA == 0:
-        print("%24s %s(%d)     ... Recursion Available is True" %("", "RA", RA))
+        print("%21s %s(%d)      ... Recursion Available is True" %("", label, RA))
     elif RA == 1:
-        print("%24s %s(%d)     ... Recursion Available is False" %("", "RA", RA))
+        print("%21s %s(%d)      ... Recursion Available is False" %("", label, RA))
 
     Reserve = (flags & 0x0030) >> 4
-    print("%24s %s(%d)" %("", "Reserve", Reserve))
+    label = "[5-4]   Reserve"
+    print("%21s %s(%d)" %("", label, Reserve))
 
-    RCODE = (flags & 0x0003)
+    RCODE = (flags & 0x000f)
+    label = "[0-3]   RCODE"
     if RCODE == 0:
-        print("%24s %s(%d)  ... No Error" %("", "RCODE", RCODE))
+        print("%21s %s(%d)   ... No Error" %("", label, RCODE))
     elif RCODE == 1:
-        print("%24s %s(%d)  ... Format Error" %("", "RCODE", RCODE))
+        print("%21s %s(%d)  ... Format Error" %("", label, RCODE))
     elif RCODE == 2:
-        print("%24s %s(%d)  ... Server Error" %("", "RCODE", RCODE))
+        print("%21s %s(%d)  ... Server Error" %("", label, RCODE))
     elif RCODE == 3:
-        print("%24s %s(%d)  ... Name Error" %("", "RCODE", RCODE))
+        print("%21s %s(%d)  ... Name Error" %("", label, RCODE))
     elif RCODE == 4:
-        print("%24s %s(%d)  ... undefined" %("", "RCODE", RCODE))
+        print("%21s %s(%d)  ... undefined" %("", label, RCODE))
     elif RCODE == 5:
-        print("%24s %s(%d)  ... Reject" %("", "RCODE", RCODE))
+        print("%21s %s(%d)  ... Reject" %("", label, RCODE))
+    else:
+        print("%21s %s(%d)  ... (undefined)" %("", label, RCODE))
 
 
 def get_answer(data, i):
