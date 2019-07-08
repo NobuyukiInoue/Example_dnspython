@@ -148,6 +148,10 @@ def set_type(type):
         return 0x002e.to_bytes(2, 'big')
     elif type == 'DNSKEY':
         return 0x0030.to_bytes(2, 'big')
+    elif type == 'NSEC3':
+        return 0x0032.to_bytes(2, 'big')
+    elif type == 'NSEC3PARAM':
+        return 0x0033.to_bytes(2, 'big')
     elif type == 'ANY':
         return 0x00ff.to_bytes(2, 'big')
     else:
@@ -186,6 +190,10 @@ def get_type(int_type):
         return "RRSIG"
     elif int_type == 48:
         return "DNSKEY"
+    elif int_type == 50:
+        return "NSEC3"
+    elif int_type == 51:
+        return "NSEC3PARAM"
     else:
         return ""
 
@@ -235,6 +243,15 @@ def get_digest_type(digest_type):
         return "Unassigned"
 
 
+def get_NSEC3_Hash_algorithm(byte_algorithm):
+    if byte_algorithm == 0:
+        return "Reserved"
+    elif byte_algorithm == 1:
+        return "SHA1"
+    else:
+        return "Available for assignment"
+
+
 def print_recv_data(data):
     print("%04x: %13s %-16s" %(0, "", "Header:"))
     fld_Transaction_ID = (data[0] << 8) + data[1]
@@ -265,9 +282,8 @@ def print_recv_data(data):
     if data[i_current] == 0x00:
         print("%04x: %02x %10s %-24s %s" %(i_current, data[i_current], "", "Name:", "<Root>"))
     else:
-        if i - i_current > 18:
-            format_str = "%04x: %0" + str(2*(i - i_current)) + "x%2s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + (i - i_current)], 'big') , "", "Name:", fld_name))
+        format_str = "%04x: %0" + str(2*(i - i_current)) + "x%2s %-24s %s"
+        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + (i - i_current)], 'big') , "", "Name:", fld_name))
 
     fld_type = (data[i] << 8) + data[i + 1]
     print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_type, "", "Type:", get_type(fld_type), fld_type))
@@ -386,7 +402,8 @@ def get_answer(data, i):
         if type_name == "NS":
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:    %10s %-24s %s" %(i_current, "", "Name:", result))
+            format_str = "%04x: %0" + str(2*(i - i_current)) + "x%2s %-24s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + (i - i_current)], 'big') , "", "Name:", result))
 
         elif type_name == "MX":
             fld_Preference = (data[i] << 8) + data[i + 1]
@@ -451,6 +468,7 @@ def get_answer(data, i):
 
         elif type_name == "RRSIG":
             i_start = i
+
             fld_Type_covered = (data[i] << 8) + data[i + 1]
             print("%04x: %04x %8s %-24s %d" %(i, fld_Type_covered, "", "Type covered:", fld_Type_covered))
             i += 2
@@ -495,16 +513,17 @@ def get_answer(data, i):
 
         elif type_name == "DNSKEY":
             i_start = i
+
             fld_Flags = (data[i] << 8) + data[i + 1]
             print("%04x: %04x %8s %-24s %d" %(i, fld_Flags, "", "Flags:", fld_Flags))
             i += 2
 
             fld_Protocol = data[i]
-            print("%04x: %04x %8s %-24s %d" %(i, fld_Protocol, "", "Protocol:", fld_Protocol))
+            print("%04x: %02x %10s %-24s %d" %(i, fld_Protocol, "", "Protocol:", fld_Protocol))
             i += 1
 
             fld_Algorithm = data[i]
-            print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
+            print("%04x: %02x %10s %-24s %s(%d)" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
             i += 1
 
             fld_public_key_length = fld_data_length - (i - i_start)
@@ -514,8 +533,33 @@ def get_answer(data, i):
             print_result_bin(fld_public_key)
             i += fld_public_key_length
 
+        elif type_name == "NSEC3" or type_name == "NSEC3PARAM":
+            i_start = i
+
+            fld_Algorithm = data[i]
+            print("%04x: %02x %10s %-24s %s(%d)" %(i, fld_Algorithm, "", "Hash Algorithm:", get_NSEC3_Hash_algorithm(fld_Algorithm), fld_Algorithm))
+            i += 1
+
+            fld_NSEC3_flags = data[i]
+            print("%04x: %02x %10s %-24s %d" %(i, fld_Algorithm, "", "NSEC3 flags:", fld_NSEC3_flags))
+            i += 1
+
+            fld_NSEC3_iterations = (data[i] << 8) + data[i + 1]
+            print("%04x: %04x %8s %-24s %d" %(i, fld_NSEC3_iterations, "", "NSEC3 iterations:", fld_NSEC3_iterations))
+            i += 2
+
+            fld_Salt_length = data[i]
+            print("%04x: %02x %10s %-24s %d" %(i, fld_Salt_length, "", "Salt length:", fld_Salt_length))
+            i += 1
+
+            fld_Salt_value = int.from_bytes(data[i:i + fld_Salt_length], 'big')
+            format_str = "%04x: %0" + str(2*fld_Salt_length) + "x %2s %-24s %d"
+            print(format_str %(i, fld_Salt_value, "", "Salt value:", fld_Salt_value))
+            i += fld_Salt_length
+
         elif type_name == "DS":
             i_start = i
+
             fld_Key_id = (data[i] << 8) + data[i + 1]
             print("%04x: %04x %8s %-12s %d" %(i, fld_Key_id, "", "Key_id:", fld_Key_id))
             i += 2
