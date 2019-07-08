@@ -236,36 +236,43 @@ def get_digest_type(digest_type):
 
 
 def print_recv_data(data):
-    print("%04x: Transaction ID: 0x%04x" %(0, (data[0] << 8) + data[1]))
+    print("%-16s", "Header:")
+    fld_Transaction_ID = (data[0] << 8) + data[1]
+    print("%04x: %04x %8s %-24s %d" %(0, fld_Transaction_ID, "", "Transaction ID:", fld_Transaction_ID))
 
     fld_Flags = (data[2] << 8) + data[3]
-    print("%04x: Flags:          0x%04x(%s)" %(2, fld_Flags, bin(fld_Flags)))
+    print("%04x: %04x %8s %-24s %s" %(2, fld_Flags, "", "Flags:", bin(fld_Flags)))
     print_flags(fld_Flags)
 
     fld_Question = (data[4] << 8) + data[5]
-    print("%04x: Questions:      0x%04x(%d)" %(4, fld_Question, fld_Question))
+    print("%04x: %04x %8s %-24s %d" %(4, fld_Question, "", "Questions:", fld_Question))
 
     fld_Anser_RRS = (data[6] << 8) + data[7]
-    print("%04x: Answer RRS:     0x%04x(%d)" %(6, fld_Anser_RRS, fld_Anser_RRS))
+    print("%04x: %04x %8s %-24s %d" %(6, fld_Anser_RRS, "", "Answer RRS:", fld_Anser_RRS))
 
     fld_Authority_RRS = (data[8] << 8) + data[9]
-    print("%04x: Authority RRS:  0x%04x(%d)" %(8, fld_Authority_RRS, fld_Authority_RRS))
+    print("%04x: %04x %8s %-24s %d" %(8, fld_Authority_RRS, "", "Authority RRS:", fld_Authority_RRS))
 
     fld_Additional_RRS = (data[10] << 8) + data[11]
-    print("%04x: Additional RRS: 0x%04x(%d)" %(10, fld_Additional_RRS, fld_Additional_RRS))
+    print("%04x: %04x %8s %-24s %d" %(10, fld_Additional_RRS, "", "Additional RRS:", fld_Additional_RRS))
 
     i = 12
     i_current = i
-    print("%04x: Querys:" %i)
+    print("\n%18s  %s" %("", "Querys:"))
+
     i, fld_name = get_name(data, i)
-    print("%04x:   Name:         %s" %(i_current, fld_name))
+    if data[i_current] == 0x00:
+        print("%04x: %02x %10s %-24s %s" %(i_current, data[i_current], "", "Name:", "<Root>"))
+    else:
+        format_str = "%04x: %0" + str(2*(i - i_current)) + "x %2s %-24s %s"
+        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + (i - i_current)], 'big') , "", "Name:", fld_name))
 
     fld_type = (data[i] << 8) + data[i + 1]
-    print("%04x:   Type:         0x%04x(%s)" %(i, fld_type, get_type(fld_type)))
+    print("%04x: %04x %8s %-24s %s" %(i, fld_type, "", "Type:", get_type(fld_type)))
     i += 2
 
     fld_class = (data[i] << 8) + data[i + 1]
-    print("%04x:   Class:        0x%04x(%s)" %(i, fld_class, get_class(fld_class)))
+    print("%04x: %04x %8s %-24s %s" %(i, fld_class, "", "Class:", get_class(fld_class)))
     i += 2
 
     get_answer(data, i)
@@ -274,204 +281,215 @@ def print_recv_data(data):
 def print_flags(flags):
     QR = (flags & 0x8000) >> 15
     if QR == 0:
-        print("        QR(%d)     ... Query" %QR)
+        print("%24s %s(%d)     ... Query" %("", "QR", QR))
     elif QR == 1:
-        print("        QR(%d)     ... Response" %QR)
+        print("%24s %s(%d)     ... Response" %("", "QR", QR))
 
     OPCODE = (flags & 0x7800) >> 11
     if OPCODE == 0:
-        print("        OPCODE(%d) ... standard query" %OPCODE)
+        print("%24s %s(%d) ... standard query" %("", "OPCODE", OPCODE))
     elif OPCODE == 1:
-        print("        OPCODE(%d) ... inverse query" %OPCODE)
+        print("%24s %s(%d) ... inverse query" %("", "OPCODE", OPCODE))
     elif OPCODE == 2:
-        print("        OPCODE(%d) ... server status request" %OPCODE)
+        print("%24s %s(%d) ... server status request" %("", "OPCODE", OPCODE))
 
     AA = (flags & 0x0400) >> 10
     if AA == 0:
-        print("        AA(%d)     ... Not Authoritative" %AA)
+        print("%24s %s(%d)     ... Not Authoritative" %("", "AA", AA))
     elif AA == 1:
-        print("        AA(%d)     ... Authoritative" %AA)
+        print("%24s %s(%d)     ... Authoritative" %("", "AA", AA))
 
     TC = (flags & 0x0200) >> 9
     if TC == 0:
-        print("        TC(%d)     ... Did not Flagment" %TC)
+        print("%24s %s(%d)     ... Did not Flagment" %("", "TC", TC))
     elif TC == 1:
-        print("        TC(%d)     ... Flagment occur" %TC)
+        print("%24s %s(%d)     ... Flagment occur" %("", "TC", TC))
 
     RD = (flags & 0x0100) >> 8
     if RD == 0:
-        print("        RD(%d)     ... Recursion Query" %RD)
+        print("%24s %s(%d)     ... Recursion Query" %("", "RD", RD))
     elif RD == 1:
-        print("        RD(%d)     ... Repeat Query" %RD)
+        print("%24s %s(%d)     ... Repeat Query" %("", "RD", RD))
 
     RA = (flags & 0x0080) >> 7
     if RA == 0:
-        print("        RA(%d)     ... Recursion Available is True" %RA)
+        print("%24s %s(%d)     ... Recursion Available is True" %("", "RA", RA))
     elif RA == 1:
-        print("        RA(%d)     ... Recursion Available is False" %RA)
+        print("%24s %s(%d)     ... Recursion Available is False" %("", "RA", RA))
 
     Reserve = (flags & 0x0030) >> 4
-    print("        Reserve(%d)" %Reserve)
+    print("%24s %s(%d)" %("", "Reserve", Reserve))
 
     RCODE = (flags & 0x0003)
     if RCODE == 0:
-        print("        RCODE(%d)  ... No Error" %RCODE)
+        print("%24s %s(%d)  ... No Error" %("", "RCODE", RCODE))
     elif RCODE == 1:
-        print("        RCODE(%d)  ... Format Error" %RCODE)
+        print("%24s %s(%d)  ... Format Error" %("", "RCODE", RCODE))
     elif RCODE == 2:
-        print("        RCODE(%d)  ... Server Error" %RCODE)
+        print("%24s %s(%d)  ... Server Error" %("", "RCODE", RCODE))
     elif RCODE == 3:
-        print("        RCODE(%d)  ... Name Error" %RCODE)
+        print("%24s %s(%d)  ... Name Error" %("", "RCODE", RCODE))
     elif RCODE == 4:
-        print("        RCODE(%d)  ... undefined" %RCODE)
+        print("%24s %s(%d)  ... undefined" %("", "RCODE", RCODE))
     elif RCODE == 5:
-        print("        RCODE(%d)  ... Reject" %RCODE)
+        print("%24s %s(%d)  ... Reject" %("", "RCODE", RCODE))
 
 
 def get_answer(data, i):
     while i < len(data):
-        print("%04x: Answers:" %i)
+        print("\n%18s  %s" %("", "Answers:"))
         result_bits = ((data[i] << 8) + data[i + 1]) & 0xC000
         if result_bits == 0xc000:
-            result_pos = ((data[i] << 8) + data[i + 1]) & 0x3fff
+            name_hex = (data[i] << 8) + data[i + 1]
+            result_pos = name_hex & 0x3fff
             _, name = get_name(data, result_pos)
-            print("%04x:   Name:         %s" %(i, name))
+            print("%04x: %04x %8s %-24s %s" %(i, name_hex, "", "Name:", name))
             i += 2
         elif result_bits == 0x8000:
             i += 2
         elif result_bits == 0x4000:
             i += 2
         elif data[i] == 0x00:
-            print("%04x:   Name:         <Root>" %i)
+            print("%04x: %02x %10s %-24s <Root>" %(i, data[i], "", "Name:"))
             i += 1
 
         fld_type = (data[i] << 8) + data[i + 1]
         type_name = get_type(fld_type)
-        print("%04x:   Type:         0x%04x(%s)" %(i, fld_type, type_name))
+        print("%04x: %04x %8s %-24s %s" %(i, fld_type, "", "Type:", type_name))
         i += 2
 
         fld_class = (data[i] << 8) + data[i + 1]
-        print("%04x:   Class:        0x%04x(%s)" %(i, fld_class, get_class(fld_class)))
+        print("%04x: %04x %8s %-24s %s" %(i, fld_class, "", "Class:", get_class(fld_class)))
         i += 2
 
         fld_ttl = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3] 
-        print("%04x:   Time to live: 0x%08x(%d)" %(i, fld_ttl, fld_ttl))
+        print("%04x: %08x %4s %-24s %d" %(i, fld_ttl, "", "Time to live:", fld_ttl))
         i += 4
 
         fld_data_length = (data[i] << 8) + data[i + 1]
-        print("%04x:   data_length:  0x%04x(%d)" %(i, fld_data_length, fld_data_length))
+        print("%04x: %04x %8s %-24s %d" %(i, fld_data_length, "", "data_length:", fld_data_length))
         i += 2
 
         if type_name == "NS":
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:   Name:         %s" %(i_current, result))
+            print("%04x:    %10s %-24s %s" %(i_current, "", "Name:", result))
 
         elif type_name == "MX":
             fld_Preference = (data[i] << 8) + data[i + 1]
-            print("%04x:   fld_Preference:  0x%04x(%d)" %(i, fld_Preference, fld_Preference))
+            print("%04x: %04x %8s %-24s %d" %(i, fld_Preference, "", "fld_Preference:", fld_Preference))
             i += 2
 
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:   Mail exchange:   %s" %(i_current, result))
+            fld_Mail_Exchange_length = i - i_current
+            format_str = "%04x: %0" + str(2*fld_Mail_Exchange_length) + "x %8s %-24s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_Mail_Exchange_length], 'big'), "", "Mail exchange:", result))
 
         elif type_name == 'SOA':
             i_current = i
-            i, primary_name_server = get_name(data, i)
-            print("%04x:   Primary name server:  %s" %(i_current, primary_name_server))
+            i, fld_primary_name_server = get_name(data, i)
+            fld_primary_name_server_length = i - i_current
+            format_str = "%04x: %0" + str(2*fld_primary_name_server_length) + "x %8s %-24s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_primary_name_server_length], 'big'), "", "Primary name server:", fld_primary_name_server))
 
             i_current = i
-            i, Responsivle_authoritys_mailbox = get_name(data, i)
-            print("%04x:   Responsivle authoritys mailbox:  %s" %(i_current, Responsivle_authoritys_mailbox))
+            i, fld_Responsivle_authoritys_mailbox = get_name(data, i)
+            fld_Responsivle_authoritys_mailbox_length = i - i_current
+            format_str = "%04x: %0" + str(2*fld_Responsivle_authoritys_mailbox_length) + "x %8s %-24s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_Responsivle_authoritys_mailbox_length], 'big'), "", "Responsivle authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
 
             Serial_number = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Serial number:     0x%08x(%d)" %(i, Serial_number, Serial_number))
+            print("%04x: %08x %4s %-24s %d" %(i, Serial_number, "", "Serial number:", Serial_number))
             i += 4
 
             Refresh_interval = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Refresh interval:  0x%08x(%d)" %(i, Refresh_interval, Refresh_interval))
+            print("%04x: %08x %4s %-24s %d" %(i, Refresh_interval, "", "Refresh interval:", Refresh_interval))
             i += 4
 
             Retry_interval = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Retry interval:    0x%08x(%d)" %(i, Retry_interval, Retry_interval))
+            print("%04x: %08x %4s %-24s %d" %(i, Retry_interval, "", "Retry interval:", Retry_interval))
             i += 4
 
             Expiration_limit = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Expiration limit:  0x%08x(%d)" %(i, Expiration_limit, Expiration_limit))
+            print("%04x: %08x %4s %-24s %d" %(i, Expiration_limit, "", "Expiration limit:", Expiration_limit))
             i += 4
 
             Minimum_TTL = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Minimum TTL:       0x%08x(%d)" %(i, Minimum_TTL, Minimum_TTL))
+            print("%04x: %08x %4s %-24s %d" %(i, Minimum_TTL, "", "Minimum TTL:", Minimum_TTL))
             i += 4
 
         elif type_name == 'A' or type_name == 'CNAME':
             if fld_data_length == 4:
-                print("%04x:   Addr:         %d.%d.%d.%d" %(i, data[i], data[i + 1], data[i + 2], data[i + 3]))
+                print("%04x: %02x%02x%02x%02x %4s %-24s %d.%d.%d.%d" %(i, data[i], data[i + 1], data[i + 2], data[i + 3], "", "Addr:", data[i], data[i + 1], data[i + 2], data[i + 3]))
                 i += 4
             else:
                 i_current = i
                 i, result = get_name(data, i)
-                print("%04x:   Primary name: %s" %(i_current, result))
+                print("%04x:   %-24s %s" %(i_current, "Primary name:", result))
 
         elif type_name == "TXT":
             fld_Text = data[i:i + fld_data_length]
-            print("%04x:   Text: %s" %(i, fld_Text))
+            format_str = "%04x: %0" + str(2*len(fld_Text)) + "x %-24s %s"
+            print(format_str %(i, int.from_bytes(fld_Text, 'big'), "Text:", fld_Text))
             i += fld_data_length
 
         elif type_name == "RRSIG":
             i_start = i
             fld_Type_covered = (data[i] << 8) + data[i + 1]
-            print("%04x:   Type covered:     0x%04x(%d)" %(i, fld_Type_covered, fld_Type_covered))
+            print("%04x: %04x %8s %-24s %d" %(i, fld_Type_covered, "", "Type covered:", fld_Type_covered))
             i += 2
 
             fld_Algorithm = data[i]
-            print("%04x:   Algorithm:        0x%04x(%s)" %(i, fld_Algorithm, get_algorithm(fld_Algorithm)[0]))
+            print("%04x: %04x %8s %-24s %s" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0]))
             i += 1
 
             fld_Labels = data[i]
-            print("%04x:   Labels:           0x%02x(%d)" %(i, fld_Labels, fld_Labels))
+            print("%04x: %02x %10s %-24s %d" %(i, fld_Labels, "", "Labels:", fld_Labels))
             i += 1
 
             fld_Original_TTL = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Original TTL:     0x%08x(%d)" %(i, fld_Original_TTL, fld_Original_TTL))
+            print("%04x: %08x %4s %-24s %d" %(i, fld_Original_TTL, "", "Original TTL:", fld_Original_TTL))
             i += 4
 
             fld_Signature_expiration = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   fld_Signature_expiration: 0x%08x(%d)" %(i, fld_Signature_expiration, fld_Signature_expiration))
+            print("%04x: %08x %4s %-24s %d" %(i, fld_Signature_expiration, "", "fld_Signature_expiration:", fld_Signature_expiration))
             i += 4
 
             fld_Time_signed =  (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x:   Time signed:      0x%08x(%d)" %(i, fld_Time_signed, fld_Time_signed))
+            print("%04x: %08x %4s %-24s %d" %(i, fld_Time_signed, "", "Time signed:", fld_Time_signed))
             i += 4
 
             fld_Id_of_signing_key = (data[i] << 8) + data[i + 1]
-            print("%04x:   Id of signing key:0x%08x(%d)" %(i, fld_Id_of_signing_key, fld_Id_of_signing_key))
+            print("%04x: %08x %4s %-24s %d" %(i, fld_Id_of_signing_key, "", "Id of signing key:", fld_Id_of_signing_key))
             i += 2
 
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:   Signer's name:%s" %(i_current, result))
+            fld_Signers_name_length = i - i_current
+            format_str = "%04x: %0" + str(2*fld_Signers_name_length) + "x %10s %-24s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_Signers_name_length], 'big'), "", "Signer's name:", result))
 
             signature_size = fld_data_length - (i - i_start)
 
             i_current = i
             i, result = get_signature(data, i, signature_size)
-            print("%04x:   Signature:   " %i_current, end = "")
+            format_str = "%04x: %0" + str(2*signature_size) + "x %13s %-24s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + signature_size], 'big'), "", "Signature:"), end = "")
             print_result(result)
 
         elif type_name == "DNSKEY":
             i_start = i
             fld_Flags = (data[i] << 8) + data[i + 1]
-            print("%04x:   Flags:     0x%04x(%d)" %(i, fld_Flags, fld_Flags))
+            print("%04x: %04x %8s %12s %d" %(i, fld_Flags, "", "Flags:", fld_Flags))
             i += 2
 
             fld_Protocol = data[i]
-            print("%04x:   Protocol:  0x%04x(%d)" %(i, fld_Protocol, fld_Protocol))
+            print("%04x: %04x %8s %12s %d" %(i, fld_Protocol, "", "Protocol:", fld_Protocol))
             i += 1
 
             fld_Algorithm = data[i]
-            print("%04x:   Algorithm: 0x%04x(%s)" %(i, fld_Algorithm, get_algorithm(fld_Algorithm)[0]))
+            print("%04x: %04x %8s %12s %s" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0]))
             i += 1
 
             fld_public_key_length = fld_data_length - (i - i_start)
@@ -483,25 +501,31 @@ def get_answer(data, i):
         elif type_name == "DS":
             i_start = i
             fld_Key_id = (data[i] << 8) + data[i + 1]
-            print("%04x:   Key_id:       0x%04x(%d)" %(i, fld_Key_id, fld_Key_id))
+            print("%04x: %04x %8s %-12s %d" %(i, fld_Key_id, "", "Key_id:", fld_Key_id))
             i += 2
 
             fld_Algorithm = data[i]
-            print("%04x:   Algorithm:    0x%02x(%s)" %(i, fld_Algorithm, get_algorithm(fld_Algorithm)[0]))
+            print("%04x: %02x %10s %-12s %s" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0]))
             i += 1
 
             fld_Digest_type = data[i]
-            print("%04x:   Digest type:  0x%02x(%s)" %(i, fld_Digest_type, get_digest_type(fld_Digest_type)))
+            print("%04x: %02x %10s %-12s %s" %(i, fld_Digest_type, "", "Digest type:", get_digest_type(fld_Digest_type)))
             i += 1
 
-            print("%04x:   Digest:      " %i, end = "")
             fld_Public_Key_size = fld_data_length - (i - i_start)
             fld_Public_Key = data[i:i + fld_Public_Key_size]
+            format_str = "%04x: %0" + str(2*fld_Public_Key_size) + "x %13s %s"
+            print(format_str %(i, int.from_bytes(fld_Public_Key, 'big'), "", "Digest:"), end = "")
             print_result_bin(fld_Public_Key)
             i += fld_Public_Key_size
 
         elif type_name == "AAAA":
-            print("%04x:   Addr:         %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x" %(i,
+            print("%04x: %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x %12s %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x" %(i,
+                data[i], data[i + 1], data[i + 2], data[i + 3],
+                data[i + 4], data[i + 5], data[i + 6], data[i + 7],
+                data[i + 8], data[i + 9], data[i + 10], data[i + 11],
+                data[i + 12], data[i + 13], data[i + 14], data[i + 15],
+                "Addr:",
                 data[i], data[i + 1], data[i + 2], data[i + 3],
                 data[i + 4], data[i + 5], data[i + 6], data[i + 7],
                 data[i + 8], data[i + 9], data[i + 10], data[i + 11],
@@ -511,11 +535,11 @@ def get_answer(data, i):
         elif type_name == "PTR":
             i_current = i
             i, result = get_name(data, i)
-            print("%04x:   Domain Name: %s" %(i_current, result))
+            print("%04x:   %12s %s" %(i_current, "Domain Name:", result))
 
         else:
             fld_other = data[i:i + fld_data_length]
-            print("%04x:   Data: %s" %(i, fld_other))
+            print("%04x:   %12s %s" %(i, "Data:", fld_other))
             i += fld_data_length
 
 
@@ -575,8 +599,8 @@ def get_signature(data, i, size):
 def print_result(target_str):
     col = 0
     for i in range(len(target_str)):
-        if col % 16 == 0 and col >= 16:
-            print("\n                      %02x" %ord(target_str[i]), end = "")
+        if col % 16 == 0:
+            print("\n      %02x" %ord(target_str[i]), end = "")
         else:
             print(" %02x" %ord(target_str[i]), end = "")
         col += 1
@@ -586,8 +610,8 @@ def print_result(target_str):
 def print_result_bin(target_str):
     col = 0
     for i in range(len(target_str)):
-        if col % 16 == 0 and col >= 16:
-            print("\n                      %02x" %ord(chr(target_str[i])), end = "")
+        if col % 16 == 0:
+            print("\n      %02x" %ord(chr(target_str[i])), end = "")
         else:
             print(" %02x" %ord(chr(target_str[i])), end = "")
         col += 1
