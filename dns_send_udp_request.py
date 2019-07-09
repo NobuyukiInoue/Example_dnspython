@@ -282,8 +282,9 @@ def print_recv_data(data):
     if data[i_current] == 0x00:
         print("%04x: %02x %10s %-24s %s" %(i_current, data[i_current], "", "Name:", "<Root>"))
     else:
-        format_str = "%04x: %0" + str(2*(i - i_current)) + "x%2s %-24s %s"
-        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + (i - i_current)], 'big') , "", "Name:", fld_name))
+        name_length = i - i_current
+        format_str = "%04x: %0" + str(2*name_length) + "x%" + str(13 - 2*name_length) + "s %-24s %s"
+        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", fld_name))
 
     fld_type = (data[i] << 8) + data[i + 1]
     print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_type, "", "Type:", get_type(fld_type), fld_type))
@@ -300,77 +301,77 @@ def print_flags(flags):
     QR = (flags & 0x8000) >> 15
     label = "[bit 0]     QR"
     if QR == 0:
-        print("%21s %s(%d)      ... Query" %("", label, QR))
+        print("%21s %-20s(%d) %s" %("", label, QR, "... Query"))
     elif QR == 1:
-        print("%21s %s(%d)      ... Response" %("", label, QR))
+        print("%21s %-20s(%d) %s" %("", label, QR, "... Response"))
 
     OPCODE = (flags & 0x7800) >> 11
     label = "[bit 1-4]   OPCODE"
     if OPCODE == 0:
-        print("%21s %s(%d)  ... standard query" %("", label, OPCODE))
+        print("%21s %-20s(%d) %s" %("", label, OPCODE, "... standard query"))
     elif OPCODE == 1:
-        print("%21s %s(%d)  ... inverse query" %("", label, OPCODE))
+        print("%21s %-20s(%d) %s" %("", label, OPCODE, "... inverse query"))
     elif OPCODE == 2:
-        print("%21s %s(%d)  ... server status request" %("", label, OPCODE))
+        print("%21s %-20s(%d) %s" %("", label, OPCODE, "... server status request"))
 
     AA = (flags & 0x0400) >> 10
     label = "[bit 5]     AA"
     if AA == 0:
-        print("%21s %s(%d)      ... Not Authoritative" %("", label, AA))
+        print("%21s %-20s(%d) %s" %("", label, AA, "... Not Authoritative"))
     elif AA == 1:
-        print("%21s %s(%d)      ... Authoritative" %("", label, AA))
+        print("%21s %-20s(%d) %s" %("", label, AA, "... Authoritative"))
 
     TC = (flags & 0x0200) >> 9
     label = "[bit 6]     TC"
     if TC == 0:
-        print("%21s %s(%d)      ... Did not Flagment" %("", label, TC))
+        print("%21s %-20s(%d) %s" %("", label, TC, "... Did not Flagment"))
     elif TC == 1:
-        print("%21s %s(%d)      ... Flagment occur" %("", label, TC))
+        print("%21s %-20s(%d) %s" %("", label, TC, "... Flagment occur"))
 
     RD = (flags & 0x0100) >> 8
     label = "[bit 7]     RD"
     if RD == 0:
-        print("%21s %s(%d)      ... Recursion Query" %("", label, RD))
+        print("%21s %-20s(%d) %s" %("", label, RD, "... Recursion Query"))
     elif RD == 1:
-        print("%21s %s(%d)      ... Repeat Query" %("", label, RD))
+        print("%21s %-20s(%d) %s" %("", label, RD, "... Repeat Query"))
 
     RA = (flags & 0x0080) >> 7
     label = "[bit 8]     RA"
     if RA == 0:
-        print("%21s %s(%d)      ... Recursion Available is True" %("", label, RA))
+        print("%21s %-20s(%d) %s" %("", label, RA, "... Recursion Available is True"))
     elif RA == 1:
-        print("%21s %s(%d)      ... Recursion Available is False" %("", label, RA))
+        print("%21s %-20s(%d) %s" %("", label, RA, "... Recursion Available is False"))
 
     Reserve = (flags & 0x0040) >> 6
     label = "[bit 9]     Reserve"
-    print("%21s %s(%d)" %("", label, Reserve))
+    print("%21s %-20s(%d)" %("", label, Reserve))
 
     # bit 10	AD	Authentic Data	[RFC4035][RFC6840][RFC Errata 4924]
     AD = (flags & 0x0020) >> 5
     label = "[bit 10]    Authentic Data"
-    print("%21s %s(%d)" %("", label, AD))
+    print("%21s %-20s(%d)" %("", label, AD))
 
     # bit 11	CD	Checking Disabled	[RFC4035][RFC6840][RFC Errata 4927]
     CD = (flags & 0x0010) >> 4
     label = "[bit 11]    Checking Disable"
-    print("%21s %s(%d)" %("", label, CD))
+    print("%21s %-20s(%d)" %("", label, CD))
 
     RCODE = (flags & 0x000f)
     label = "[bit 12-15] RCODE"
     if RCODE == 0:
-        print("%21s %s(%d)   ... No Error" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... No Error"))
     elif RCODE == 1:
-        print("%21s %s(%d)  ... Format Error" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Format Error"))
     elif RCODE == 2:
-        print("%21s %s(%d)  ... Server Error" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Server Error"))
     elif RCODE == 3:
-        print("%21s %s(%d)  ... Name Error" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Name Error"))
     elif RCODE == 4:
-        print("%21s %s(%d)  ... undefined" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... undefined"))
     elif RCODE == 5:
-        print("%21s %s(%d)  ... Reject" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Reject"))
     else:
-        print("%21s %s(%d)  ... (unknown)" %("", label, RCODE))
+        print("%21s %-20s(%d) %s" %("", label, RCODE, "... (unknown)"))
 
 
 def get_answer(data, i):
@@ -412,8 +413,9 @@ def get_answer(data, i):
         if type_name == "NS":
             i_current = i
             i, result = get_name(data, i)
-            format_str = "%04x: %0" + str(2*(i - i_current)) + "x%2s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + (i - i_current)], 'big') , "", "Name:", result))
+            name_length = i - i_current
+            format_str = "%04x: %0" + str(2*name_length) + "x%" + str(13 - 2*name_length) + "s %-24s %s"
+            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", result))
 
         elif type_name == "MX":
             fld_Preference = (data[i] << 8) + data[i + 1]
