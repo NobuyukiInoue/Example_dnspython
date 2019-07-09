@@ -298,14 +298,14 @@ def print_recv_data(data):
 
 def print_flags(flags):
     QR = (flags & 0x8000) >> 15
-    label = "[15]    QR"
+    label = "[bit 0]     QR"
     if QR == 0:
         print("%21s %s(%d)      ... Query" %("", label, QR))
     elif QR == 1:
         print("%21s %s(%d)      ... Response" %("", label, QR))
 
     OPCODE = (flags & 0x7800) >> 11
-    label = "[14-11] OPCODE"
+    label = "[bit 1-4]   OPCODE"
     if OPCODE == 0:
         print("%21s %s(%d)  ... standard query" %("", label, OPCODE))
     elif OPCODE == 1:
@@ -314,39 +314,49 @@ def print_flags(flags):
         print("%21s %s(%d)  ... server status request" %("", label, OPCODE))
 
     AA = (flags & 0x0400) >> 10
-    label = "[10]    AA"
+    label = "[bit 5]     AA"
     if AA == 0:
         print("%21s %s(%d)      ... Not Authoritative" %("", label, AA))
     elif AA == 1:
         print("%21s %s(%d)      ... Authoritative" %("", label, AA))
 
     TC = (flags & 0x0200) >> 9
-    label = "[9]     TC"
+    label = "[bit 6]     TC"
     if TC == 0:
         print("%21s %s(%d)      ... Did not Flagment" %("", label, TC))
     elif TC == 1:
         print("%21s %s(%d)      ... Flagment occur" %("", label, TC))
 
     RD = (flags & 0x0100) >> 8
-    label = "[8]     RD"
+    label = "[bit 7]     RD"
     if RD == 0:
         print("%21s %s(%d)      ... Recursion Query" %("", label, RD))
     elif RD == 1:
         print("%21s %s(%d)      ... Repeat Query" %("", label, RD))
 
     RA = (flags & 0x0080) >> 7
-    label = "[7]     RA"
+    label = "[bit 8]     RA"
     if RA == 0:
         print("%21s %s(%d)      ... Recursion Available is True" %("", label, RA))
     elif RA == 1:
         print("%21s %s(%d)      ... Recursion Available is False" %("", label, RA))
 
-    Reserve = (flags & 0x0030) >> 4
-    label = "[5-4]   Reserve"
+    Reserve = (flags & 0x0040) >> 6
+    label = "[bit 9]     Reserve"
     print("%21s %s(%d)" %("", label, Reserve))
 
+    # bit 10	AD	Authentic Data	[RFC4035][RFC6840][RFC Errata 4924]
+    AD = (flags & 0x0020) >> 5
+    label = "[bit 10]    Authentic Data"
+    print("%21s %s(%d)" %("", label, AD))
+
+    # bit 11	CD	Checking Disabled	[RFC4035][RFC6840][RFC Errata 4927]
+    CD = (flags & 0x0010) >> 4
+    label = "[bit 11]    Checking Disable"
+    print("%21s %s(%d)" %("", label, CD))
+
     RCODE = (flags & 0x000f)
-    label = "[0-3]   RCODE"
+    label = "[bit 12-15] RCODE"
     if RCODE == 0:
         print("%21s %s(%d)   ... No Error" %("", label, RCODE))
     elif RCODE == 1:
@@ -360,7 +370,7 @@ def print_flags(flags):
     elif RCODE == 5:
         print("%21s %s(%d)  ... Reject" %("", label, RCODE))
     else:
-        print("%21s %s(%d)  ... (undefined)" %("", label, RCODE))
+        print("%21s %s(%d)  ... (unknown)" %("", label, RCODE))
 
 
 def get_answer(data, i):
