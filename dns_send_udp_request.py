@@ -274,17 +274,10 @@ def print_recv_data(data):
     print("%04x: %04x %8s %-24s %d" %(10, fld_Additional_RRS, "", "Additional RRS:", fld_Additional_RRS))
 
     i = 12
-    i_current = i
     print("\n"
           "%04x: %13s %s" %(i, "", "Querys:"))
-
-    i, fld_name = get_name(data, i)
-    if data[i_current] == 0x00:
-        print("%04x: %02x %10s %-24s %s" %(i_current, data[i_current], "", "Name:", "<Root>"))
-    else:
-        name_length = i - i_current
-        format_str = "%04x: %0" + str(2*name_length) + "x%" + str(13 - 2*name_length) + "s %-24s %s"
-        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", fld_name))
+    # Name:
+    i = print_name(data, i)
 
     fld_type = (data[i] << 8) + data[i + 1]
     print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_type, "", "Type:", get_type(fld_type), fld_type))
@@ -296,8 +289,9 @@ def print_recv_data(data):
 
     get_answer(data, i)
 
-
 def print_flags(flags):
+    print(" %21s" %"/*")
+
     QR = (flags & 0x8000) >> 15
     label = "[bit 0]     QR"
     if QR == 0:
@@ -373,22 +367,46 @@ def print_flags(flags):
     else:
         print("%21s %-20s(%d) %s" %("", label, RCODE, "... (unknown)"))
 
+    print(" %21s" %"*/")
+
+
+def print_name(data, i):
+    i_current = i
+    i, fld_name = get_name(data, i)
+
+    if data[i_current] == 0x00:
+        print("%04x: %02x %10s %-24s %s" %(i_current, data[i_current], "", "Name:", "<Root>"))
+    else:
+        name_length = i - i_current
+        if name_length < 13:
+            format_str = "%04x: %0" + str(2*name_length) + "x%" + str(13 - 2*name_length) + "s %-24s %s"
+        else:
+            format_str = "%04x: %0" + str(2*name_length) + "x %s %-24s %s"
+        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", fld_name))
+
+    return i
+
 
 def get_answer(data, i):
     while i < len(data):
         print("\n"
               "%04x: %13s %s" %(i, "", "Answers:"))
+
         result_bits = ((data[i] << 8) + data[i + 1]) & 0xC000
+
         if result_bits == 0xc000:
             name_hex = (data[i] << 8) + data[i + 1]
             result_pos = name_hex & 0x3fff
-            _, name = get_name(data, result_pos)
-            print("%04x: %04x %8s %-24s %s" %(i, name_hex, "", "Name:", name))
+            _, fld_name = get_name(data, result_pos)
+            print("%04x: %04x %8s %-24s %s" %(i, int.from_bytes(data[i:i + 2], 'big') , "", "Name:", fld_name))
             i += 2
+
         elif result_bits == 0x8000:
             i += 2
+
         elif result_bits == 0x4000:
             i += 2
+
         elif data[i] == 0x00:
             print("%04x: %02x %10s %-24s <Root>" %(i, data[i], "", "Name:"))
             i += 1
@@ -411,11 +429,8 @@ def get_answer(data, i):
         i += 2
 
         if type_name == "NS":
-            i_current = i
-            i, result = get_name(data, i)
-            name_length = i - i_current
-            format_str = "%04x: %0" + str(2*name_length) + "x%" + str(13 - 2*name_length) + "s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", result))
+            # Name:
+            i = print_name(data, i)
 
         elif type_name == "MX":
             fld_Preference = (data[i] << 8) + data[i + 1]
