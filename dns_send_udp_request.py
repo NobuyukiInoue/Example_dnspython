@@ -271,6 +271,23 @@ def get_NSEC3_Hash_algorithm(byte_algorithm):
         return "Available for assignment"
 
 
+def get_stripv6addr(addr):
+    result = ""
+    for i in range(0, len(addr), 2):
+        word = (addr[i] << 8) + addr[i + 1]
+        if word == 0:
+            if i > 0:
+                if result[-1] != ":":
+                    result += ":"
+            else:
+                result += ":"
+        elif i == 0:
+            result = "{0:x}".format(word)
+        else:
+            result += ":{0:x}".format(word)
+    return result
+
+
 def print_recv_data(data):
     print("{0:04x}: {1:13} {2:<16}".format(0, "", "Header:"))
     fld_Transaction_ID = (data[0] << 8) + data[1]
@@ -627,6 +644,7 @@ def get_answer(data, i):
             i += fld_Public_Key_size
 
         elif type_name == "AAAA":
+            """
             print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x}{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}{11:02x}{12:02x}{13:02x}{14:02x}{15:02x}{16:02x}\n {17:18} {18} {1:02x}{2:02x}:{3:02x}{4:02x}:{5:02x}{6:02x}:{7:02x}{8:02x}:{9:02x}{10:02x}:{11:02x}{12:02x}:{13:02x}{14:02x}:{15:02x}{16:02x}".format(i,
                 data[i], data[i + 1], data[i + 2], data[i + 3],
                 data[i + 4], data[i + 5], data[i + 6], data[i + 7],
@@ -634,7 +652,13 @@ def get_answer(data, i):
                 data[i + 12], data[i + 13], data[i + 14], data[i + 15],
                 "",
                 "Addr:"))
-
+            """
+            print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x}{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}{11:02x}{12:02x}{13:02x}{14:02x}{15:02x}{16:02x}\n {17:18} {18} {19}".format(i,
+                data[i], data[i + 1], data[i + 2], data[i + 3],
+                data[i + 4], data[i + 5], data[i + 6], data[i + 7],
+                data[i + 8], data[i + 9], data[i + 10], data[i + 11],
+                data[i + 12], data[i + 13], data[i + 14], data[i + 15],
+                "", "Addr:", get_stripv6addr(data[i:i + 16])))
             i += fld_data_length
 
         elif type_name == "PTR":
