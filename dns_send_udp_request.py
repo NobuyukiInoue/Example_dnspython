@@ -229,6 +229,13 @@ def get_algorithm(byte_algorithm):
         return ("", 0)
 
 
+def get_dnskey_protocol(Protocol):
+    if Protocol == 3:
+        return "DNSKEY"
+    else:
+        return ""
+
+
 def get_digest_type(digest_type):
     if digest_type == 0:
         return "Reserved"
@@ -289,6 +296,7 @@ def print_recv_data(data):
     i += 2
 
     get_answer(data, i)
+
 
 def print_flags(flags):
     print(" {0:21}".format("/*"))
@@ -543,21 +551,21 @@ def get_answer(data, i):
             i_start = i
 
             fld_Flags = (data[i] << 8) + data[i + 1]
-            print("{0:04x}: {1:04x} {2:8} {3:<24} {4}:{4:d}".format(i, fld_Flags, "", "Flags:", fld_Flags))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4}".format(i, fld_Flags, "", "Flags:", fld_Flags))
             i += 2
 
             fld_Protocol = data[i]
-            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}:{4:d}".format(i, fld_Protocol, "", "Protocol:", fld_Protocol))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({5:d})".format(i, fld_Protocol, "", "Protocol:", get_dnskey_protocol(fld_Protocol), fld_Protocol))
             i += 1
 
             fld_Algorithm = data[i]
-            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({4:d})" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({5:d})".format(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
             i += 1
 
             fld_public_key_length = fld_data_length - (i - i_start)
             fld_public_key = data[i:i + fld_public_key_length]
-            format_str = "{0:04x}: {1:0" + str(2*fld_public_key_length) + "x\n %18s %-24s"
-            print(format_str %(i, int.from_bytes(fld_public_key, 'big'), "", "Public Key:"), end = "")
+            format_str = "{0:04x}: {1:0" + str(2*fld_public_key_length) + "x}\n {2:18} {2:<24}"
+            print(format_str.format(i, int.from_bytes(fld_public_key, 'big'), "", "Public Key:"), end = "")
             print_result_bin(fld_public_key)
             i += fld_public_key_length
 
@@ -589,15 +597,15 @@ def get_answer(data, i):
             i_start = i
 
             fld_Key_id = (data[i] << 8) + data[i + 1]
-            print("{0:04x}: {1:04x} {2:8} {3:<12} {4:d}".format(i, fld_Key_id, "", "Key_id:", fld_Key_id))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Key_id, "", "Key_id:", fld_Key_id))
             i += 2
 
             fld_Algorithm = data[i]
-            print("{0:04x}: {1:02x} {2:10} {3:<12} {4}({5:d})".format(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({5:d})".format(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
             i += 1
 
             fld_Digest_type = data[i]
-            print("{0:04x}: {1:02x} {2:10} {3:<12} {4}({5:d})".format(i, fld_Digest_type, "", "Digest type:", get_digest_type(fld_Digest_type), fld_Digest_type))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({5:d})".format(i, fld_Digest_type, "", "Digest type:", get_digest_type(fld_Digest_type), fld_Digest_type))
             i += 1
 
             fld_Public_Key_size = fld_data_length - (i - i_start)
