@@ -28,15 +28,15 @@ def main():
         resolvstring = ipaddr[3] + "." + ipaddr[2] + "." + ipaddr[1] + "." + ipaddr[0] + ".in-addr.arpa"
 
     if recordtype == "PTR" and ".in-addr.arpa" not in resolvstring:
-        print("\"in-addr.arpa\" not in %s" %resolvstring)
+        print("\"in-addr.arpa\" not in {0}".format(resolvstring))
         exit(1)
 
     dnsserver = argv[1]
     PORT = 53
     print("============================================================================================\n"
-          "DNS Server    = %s:%d\n"
-          "resolv string = %s\n" 
-          "record type   = %s" %(dnsserver, PORT, resolvstring, recordtype))
+          "DNS Server    = {0}:{1:d}\n"
+          "resolv string = {2}\n" 
+          "record type   = {3}".format(dnsserver, PORT, resolvstring, recordtype))
 
     data_send = set_data(1, resolvstring, recordtype)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -52,18 +52,19 @@ def main():
 
     # display results.
     print("============================================================================================\n"
-          "Reply from %s:%s, length = 0x%04x(%d) byte.\n"
-          "Response time ... : %f[ms]\n"
+          "Reply from    : {0}:{1}\n"
+          "length        : 0x{2:04x}({3:d}) bytes.\n"
+          "Response time : {4:f}[ms]\n"
           "============================================================================================"
-            %(address[0], address[1], len(data_recv), len(data_recv), (time_end - time_start)*1000))
+        .format(address[0], address[1], len(data_recv), len(data_recv), (time_end - time_start)*1000))
 
     print_recv_data(data_recv)
     print("============================================================================================")
 
 
 def exit_data_send(argv0):
-    print("Usage: python %s [dns server] [resolv string] [record type]" %argv0)
-    print("\n"
+    print("Usage: python {cmd} [dns server] [resolv string] [record type]\n"
+          "\n"
           "For Example)\n"
           "python {cmd} 192.168.1.1 www.hackerzlab.com cname\n"
           "python {cmd} 192.168.1.1 hackerzlab.com ns\n"
@@ -253,121 +254,121 @@ def get_NSEC3_Hash_algorithm(byte_algorithm):
 
 
 def print_recv_data(data):
-    print("%04x: %13s %-16s" %(0, "", "Header:"))
+    print("{0:04x}: {1:13} {2:<16}".format(0, "", "Header:"))
     fld_Transaction_ID = (data[0] << 8) + data[1]
-    print("%04x: %04x %8s %-24s %d" %(0, fld_Transaction_ID, "", "Transaction ID:", fld_Transaction_ID))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(0, fld_Transaction_ID, "", "Transaction ID:", fld_Transaction_ID))
 
     fld_Flags = (data[2] << 8) + data[3]
-    print("%04x: %04x %8s %-24s %s" %(2, fld_Flags, "", "Flags:", bin(fld_Flags)))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4}".format(2, fld_Flags, "", "Flags:", bin(fld_Flags)))
     print_flags(fld_Flags)
 
     fld_Question = (data[4] << 8) + data[5]
-    print("%04x: %04x %8s %-24s %d" %(4, fld_Question, "", "Questions:", fld_Question))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(4, fld_Question, "", "Questions:", fld_Question))
 
     fld_Anser_RRS = (data[6] << 8) + data[7]
-    print("%04x: %04x %8s %-24s %d" %(6, fld_Anser_RRS, "", "Answer RRS:", fld_Anser_RRS))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(6, fld_Anser_RRS, "", "Answer RRS:", fld_Anser_RRS))
 
     fld_Authority_RRS = (data[8] << 8) + data[9]
-    print("%04x: %04x %8s %-24s %d" %(8, fld_Authority_RRS, "", "Authority RRS:", fld_Authority_RRS))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(8, fld_Authority_RRS, "", "Authority RRS:", fld_Authority_RRS))
 
     fld_Additional_RRS = (data[10] << 8) + data[11]
-    print("%04x: %04x %8s %-24s %d" %(10, fld_Additional_RRS, "", "Additional RRS:", fld_Additional_RRS))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(10, fld_Additional_RRS, "", "Additional RRS:", fld_Additional_RRS))
 
     i = 12
     print("\n"
-          "%04x: %13s %s" %(i, "", "Querys:"))
+          "{0:04x}: {1:13} {2}".format(i, "", "Querys:"))
     # Name:
     i = print_name(data, i)
 
     fld_type = (data[i] << 8) + data[i + 1]
-    print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_type, "", "Type:", get_type(fld_type), fld_type))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_type, "", "Type:", get_type(fld_type), fld_type))
     i += 2
 
     fld_class = (data[i] << 8) + data[i + 1]
-    print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_class, "", "Class:", get_class(fld_class), fld_class))
+    print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_class, "", "Class:", get_class(fld_class), fld_class))
     i += 2
 
     get_answer(data, i)
 
 def print_flags(flags):
-    print(" %21s" %"/*")
+    print(" {0:21}".format("/*"))
 
     QR = (flags & 0x8000) >> 15
     label = "[bit 0]     QR"
     if QR == 0:
-        print("%21s %-20s(%d) %s" %("", label, QR, "... Query"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, QR, "... Query"))
     elif QR == 1:
-        print("%21s %-20s(%d) %s" %("", label, QR, "... Response"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, QR, "... Response"))
 
     OPCODE = (flags & 0x7800) >> 11
     label = "[bit 1-4]   OPCODE"
     if OPCODE == 0:
-        print("%21s %-20s(%d) %s" %("", label, OPCODE, "... standard query"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, OPCODE, "... standard query"))
     elif OPCODE == 1:
-        print("%21s %-20s(%d) %s" %("", label, OPCODE, "... inverse query"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, OPCODE, "... inverse query"))
     elif OPCODE == 2:
-        print("%21s %-20s(%d) %s" %("", label, OPCODE, "... server status request"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, OPCODE, "... server status request"))
 
     AA = (flags & 0x0400) >> 10
     label = "[bit 5]     AA"
     if AA == 0:
-        print("%21s %-20s(%d) %s" %("", label, AA, "... Not Authoritative"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, AA, "... Not Authoritative"))
     elif AA == 1:
-        print("%21s %-20s(%d) %s" %("", label, AA, "... Authoritative"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, AA, "... Authoritative"))
 
     TC = (flags & 0x0200) >> 9
     label = "[bit 6]     TC"
     if TC == 0:
-        print("%21s %-20s(%d) %s" %("", label, TC, "... Did not Flagment"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, TC, "... Did not Flagment"))
     elif TC == 1:
-        print("%21s %-20s(%d) %s" %("", label, TC, "... Flagment occur"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, TC, "... Flagment occur"))
 
     RD = (flags & 0x0100) >> 8
     label = "[bit 7]     RD"
     if RD == 0:
-        print("%21s %-20s(%d) %s" %("", label, RD, "... Recursion Query"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RD, "... Recursion Query"))
     elif RD == 1:
-        print("%21s %-20s(%d) %s" %("", label, RD, "... Repeat Query"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RD, "... Repeat Query"))
 
     RA = (flags & 0x0080) >> 7
     label = "[bit 8]     RA"
     if RA == 0:
-        print("%21s %-20s(%d) %s" %("", label, RA, "... Recursion Available is True"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RA, "... Recursion Available is True"))
     elif RA == 1:
-        print("%21s %-20s(%d) %s" %("", label, RA, "... Recursion Available is False"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RA, "... Recursion Available is False"))
 
     Reserve = (flags & 0x0040) >> 6
     label = "[bit 9]     Reserve"
-    print("%21s %-20s(%d)" %("", label, Reserve))
+    print("{0:21} {1:<20}({2:d})".format("", label, Reserve))
 
     # bit 10	AD	Authentic Data	[RFC4035][RFC6840][RFC Errata 4924]
     AD = (flags & 0x0020) >> 5
     label = "[bit 10]    Authentic Data"
-    print("%21s %-20s(%d)" %("", label, AD))
+    print("{0:21} {1:<20}({2:d})".format("", label, AD))
 
     # bit 11	CD	Checking Disabled	[RFC4035][RFC6840][RFC Errata 4927]
     CD = (flags & 0x0010) >> 4
     label = "[bit 11]    Checking Disable"
-    print("%21s %-20s(%d)" %("", label, CD))
+    print("{0:21} {1:<20}({2:d})".format("", label, CD))
 
     RCODE = (flags & 0x000f)
     label = "[bit 12-15] RCODE"
     if RCODE == 0:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... No Error"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... No Error"))
     elif RCODE == 1:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Format Error"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... Format Error"))
     elif RCODE == 2:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Server Error"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... Server Error"))
     elif RCODE == 3:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Name Error"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... Name Error"))
     elif RCODE == 4:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... undefined"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... undefined"))
     elif RCODE == 5:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... Reject"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... Reject"))
     else:
-        print("%21s %-20s(%d) %s" %("", label, RCODE, "... (unknown)"))
+        print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... (unknown)"))
 
-    print(" %21s" %"*/")
+    print(" {0:21}".format("*/"))
 
 
 def print_name(data, i):
@@ -375,14 +376,14 @@ def print_name(data, i):
     i, fld_name = get_name(data, i)
 
     if data[i_current] == 0x00:
-        print("%04x: %02x %10s %-24s %s" %(i_current, data[i_current], "", "Name:", "<Root>"))
+        print("{0:04x}: {1:02x} {2:10} {3:<24} {4:}".format(i_current, data[i_current], "", "Name:", "<Root>"))
     else:
         name_length = i - i_current
-        if name_length < 13:
-            format_str = "%04x: %0" + str(2*name_length) + "x%" + str(13 - 2*name_length) + "s %-24s %s"
+        if 2*name_length < 13:
+            format_str = "{0:04x}: {1:0" + str(2*name_length) + "x} {2:" + str(13 - 2*name_length) + "}{3:<24} {4}"
         else:
-            format_str = "%04x: %0" + str(2*name_length) + "x %s %-24s %s"
-        print(format_str %(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", fld_name))
+            format_str = "{0:04x}: {1:0" + str(2*name_length) + "x} {2} {3:<24} {4}"
+        print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", fld_name))
 
     return i
 
@@ -398,7 +399,7 @@ def get_answer(data, i):
             name_hex = (data[i] << 8) + data[i + 1]
             result_pos = name_hex & 0x3fff
             _, fld_name = get_name(data, result_pos)
-            print("%04x: %04x %8s %-24s %s" %(i, int.from_bytes(data[i:i + 2], 'big') , "", "Name:", fld_name))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4}".format(i, int.from_bytes(data[i:i + 2], 'big') , "", "Name:", fld_name))
             i += 2
 
         elif result_bits == 0x8000:
@@ -408,24 +409,24 @@ def get_answer(data, i):
             i += 2
 
         elif data[i] == 0x00:
-            print("%04x: %02x %10s %-24s <Root>" %(i, data[i], "", "Name:"))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} <Root>".format(i, data[i], "", "Name:"))
             i += 1
 
         fld_type = (data[i] << 8) + data[i + 1]
         type_name = get_type(fld_type)
-        print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_type, "", "Type:", type_name, fld_type))
+        print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_type, "", "Type:", type_name, fld_type))
         i += 2
 
         fld_class = (data[i] << 8) + data[i + 1]
-        print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_class, "", "Class:", get_class(fld_class), fld_class))
+        print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_class, "", "Class:", get_class(fld_class), fld_class))
         i += 2
 
         fld_ttl = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3] 
-        print("%04x: %08x %4s %-24s %d" %(i, fld_ttl, "", "Time to live:", fld_ttl))
+        print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_ttl, "", "Time to live:", fld_ttl))
         i += 4
 
         fld_data_length = (data[i] << 8) + data[i + 1]
-        print("%04x: %04x %8s %-24s %d" %(i, fld_data_length, "", "data_length:", fld_data_length))
+        print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_data_length, "", "data_length:", fld_data_length))
         i += 2
 
         if type_name == "NS":
@@ -434,128 +435,128 @@ def get_answer(data, i):
 
         elif type_name == "MX":
             fld_Preference = (data[i] << 8) + data[i + 1]
-            print("%04x: %04x %8s %-24s %d" %(i, fld_Preference, "", "fld_Preference:", fld_Preference))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Preference, "", "fld_Preference:", fld_Preference))
             i += 2
 
             i_current = i
             i, result = get_name(data, i)
             fld_Mail_Exchange_length = i - i_current
-            format_str = "%04x: %0" + str(2*fld_Mail_Exchange_length) + "x\n %18s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_Mail_Exchange_length], 'big'), "", "Mail exchange:", result))
+            format_str = "{0:04x}: {1:0" + str(2*fld_Mail_Exchange_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_Mail_Exchange_length], 'big'), "", "Mail exchange:", result))
 
         elif type_name == 'SOA':
             i_current = i
             i, fld_primary_name_server = get_name(data, i)
             fld_primary_name_server_length = i - i_current
-            format_str = "%04x: %0" + str(2*fld_primary_name_server_length) + "x\n %18s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_primary_name_server_length], 'big'), "", "Primary name server:", fld_primary_name_server))
+            format_str = "{0:04x}: {1:0" + str(2*fld_primary_name_server_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_primary_name_server_length], 'big'), "", "Primary name server:", fld_primary_name_server))
 
             i_current = i
             i, fld_Responsivle_authoritys_mailbox = get_name(data, i)
             fld_Responsivle_authoritys_mailbox_length = i - i_current
-            format_str = "%04x: %0" + str(2*fld_Responsivle_authoritys_mailbox_length) + "x \n %18s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_Responsivle_authoritys_mailbox_length], 'big'), "", "Responsivle authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
+            format_str = "{0:04x}: {1:0" + str(2*fld_Responsivle_authoritys_mailbox_length) + "x} \n {2:18} {3:<24} {4}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_Responsivle_authoritys_mailbox_length], 'big'), "", "Responsivle authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
 
             Serial_number = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, Serial_number, "", "Serial number:", Serial_number))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, Serial_number, "", "Serial number:", Serial_number))
             i += 4
 
             Refresh_interval = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, Refresh_interval, "", "Refresh interval:", Refresh_interval))
+            print("{0:04x}: {1:08} {2:4} {3:<24} {4:}".format(i, Refresh_interval, "", "Refresh interval:", Refresh_interval))
             i += 4
 
             Retry_interval = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, Retry_interval, "", "Retry interval:", Retry_interval))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, Retry_interval, "", "Retry interval:", Retry_interval))
             i += 4
 
             Expiration_limit = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, Expiration_limit, "", "Expiration limit:", Expiration_limit))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, Expiration_limit, "", "Expiration limit:", Expiration_limit))
             i += 4
 
             Minimum_TTL = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, Minimum_TTL, "", "Minimum TTL:", Minimum_TTL))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, Minimum_TTL, "", "Minimum TTL:", Minimum_TTL))
             i += 4
 
         elif type_name == 'A' or type_name == 'CNAME':
             if fld_data_length == 4:
-                print("%04x: %02x%02x%02x%02x %4s %-24s %d.%d.%d.%d" %(i, data[i], data[i + 1], data[i + 2], data[i + 3], "", "Addr:", data[i], data[i + 1], data[i + 2], data[i + 3]))
+                print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x} {5:4} {6:<24} {7:d}.{8:d}.{9:d}.{10:d}".format(i, data[i], data[i + 1], data[i + 2], data[i + 3], "", "Addr:", data[i], data[i + 1], data[i + 2], data[i + 3]))
                 i += 4
             else:
                 i_current = i
                 i, result = get_name(data, i)
                 result_length = i - i_current
-                format_str = "%04x: %0" + str(2*result_length) + "x \n %18s %-24s %s"
-                print(format_str %(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big'), "", "Primary name:", result))
+                format_str = "{0:04x}: {1:0" + str(2*result_length) + "x} \n {2:18} {3:<24} {4}"
+                print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big'), "", "Primary name:", result))
 
         elif type_name == "TXT":
             fld_Text = data[i:i + fld_data_length]
-            format_str = "%04x: %0" + str(2*len(fld_Text)) + "x \n %18s %-24s %s"
-            print(format_str %(i, int.from_bytes(fld_Text, 'big'), "", "Text:", fld_Text))
+            format_str = "{0:04}: {1:0" + str(2*len(fld_Text)) + "x} \n {2:18} {3:<24} {4}"
+            print(format_str.format(i, int.from_bytes(fld_Text, 'big'), "", "Text:", fld_Text))
             i += fld_data_length
 
         elif type_name == "RRSIG":
             i_start = i
 
             fld_Type_covered = (data[i] << 8) + data[i + 1]
-            print("%04x: %04x %8s %-24s %d" %(i, fld_Type_covered, "", "Type covered:", fld_Type_covered))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Type_covered, "", "Type covered:", fld_Type_covered))
             i += 2
 
             fld_Algorithm = data[i]
-            print("%04x: %04x %8s %-24s %s(%d)" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
             i += 1
 
             fld_Labels = data[i]
-            print("%04x: %02x %10s %-24s %d" %(i, fld_Labels, "", "Labels:", fld_Labels))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4:d}".format(i, fld_Labels, "", "Labels:", fld_Labels))
             i += 1
 
             fld_Original_TTL = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, fld_Original_TTL, "", "Original TTL:", fld_Original_TTL))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_Original_TTL, "", "Original TTL:", fld_Original_TTL))
             i += 4
 
             fld_Signature_expiration = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, fld_Signature_expiration, "", "fld_Signature_expiration:", fld_Signature_expiration))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_Signature_expiration, "", "fld_Signature_expiration:", fld_Signature_expiration))
             i += 4
 
             fld_Time_signed =  (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("%04x: %08x %4s %-24s %d" %(i, fld_Time_signed, "", "Time signed:", fld_Time_signed))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_Time_signed, "", "Time signed:", fld_Time_signed))
             i += 4
 
             fld_Id_of_signing_key = (data[i] << 8) + data[i + 1]
-            print("%04x: %08x %4s %-24s %d" %(i, fld_Id_of_signing_key, "", "Id of signing key:", fld_Id_of_signing_key))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_Id_of_signing_key, "", "Id of signing key:", fld_Id_of_signing_key))
             i += 2
 
             i_current = i
             i, result = get_name(data, i)
             fld_Signers_name_length = i - i_current
-            format_str = "%04x: %0" + str(2*fld_Signers_name_length) + "x\n %18s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + fld_Signers_name_length], 'big'), "", "Signer's name:", result))
+            format_str = "{0:04x}: {1:0" + str(2*fld_Signers_name_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_Signers_name_length], 'big'), "", "Signer's name:", result))
 
             signature_size = fld_data_length - (i - i_start)
 
             i_current = i
             i, result = get_signature(data, i, signature_size)
-            format_str = "%04x: %0" + str(2*signature_size) + "x\n" + " %18s %-24s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + signature_size], 'big'), "", "Signature:"), end = "")
+            format_str = "{0:04x}: {1:0" + str(2*signature_size) + "x}\n" + " {2:18} {3:<24}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + signature_size], 'big'), "", "Signature:"), end = "")
             print_result(result)
 
         elif type_name == "DNSKEY":
             i_start = i
 
             fld_Flags = (data[i] << 8) + data[i + 1]
-            print("%04x: %04x %8s %-24s %d" %(i, fld_Flags, "", "Flags:", fld_Flags))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4}:{4:d}".format(i, fld_Flags, "", "Flags:", fld_Flags))
             i += 2
 
             fld_Protocol = data[i]
-            print("%04x: %02x %10s %-24s %d" %(i, fld_Protocol, "", "Protocol:", fld_Protocol))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}:{4:d}".format(i, fld_Protocol, "", "Protocol:", fld_Protocol))
             i += 1
 
             fld_Algorithm = data[i]
-            print("%04x: %02x %10s %-24s %s(%d)" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({4:d})" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
             i += 1
 
             fld_public_key_length = fld_data_length - (i - i_start)
             fld_public_key = data[i:i + fld_public_key_length]
-            format_str = "%04x: %0" + str(2*fld_public_key_length) + "x\n %18s %-24s"
+            format_str = "{0:04x}: {1:0" + str(2*fld_public_key_length) + "x\n %18s %-24s"
             print(format_str %(i, int.from_bytes(fld_public_key, 'big'), "", "Public Key:"), end = "")
             print_result_bin(fld_public_key)
             i += fld_public_key_length
@@ -564,73 +565,70 @@ def get_answer(data, i):
             i_start = i
 
             fld_Algorithm = data[i]
-            print("%04x: %02x %10s %-24s %s(%d)" %(i, fld_Algorithm, "", "Hash Algorithm:", get_NSEC3_Hash_algorithm(fld_Algorithm), fld_Algorithm))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4}({5:d})".format(i, fld_Algorithm, "", "Hash Algorithm:", get_NSEC3_Hash_algorithm(fld_Algorithm), fld_Algorithm))
             i += 1
 
             fld_NSEC3_flags = data[i]
-            print("%04x: %02x %10s %-24s %d" %(i, fld_Algorithm, "", "NSEC3 flags:", fld_NSEC3_flags))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4:d}".format(i, fld_Algorithm, "", "NSEC3 flags:", fld_NSEC3_flags))
             i += 1
 
             fld_NSEC3_iterations = (data[i] << 8) + data[i + 1]
-            print("%04x: %04x %8s %-24s %d" %(i, fld_NSEC3_iterations, "", "NSEC3 iterations:", fld_NSEC3_iterations))
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_NSEC3_iterations, "", "NSEC3 iterations:", fld_NSEC3_iterations))
             i += 2
 
             fld_Salt_length = data[i]
-            print("%04x: %02x %10s %-24s %d" %(i, fld_Salt_length, "", "Salt length:", fld_Salt_length))
+            print("{0:04x}: {1:02x} {2:10} {3:<24} {4:d}".format(i, fld_Salt_length, "", "Salt length:", fld_Salt_length))
             i += 1
 
             fld_Salt_value = int.from_bytes(data[i:i + fld_Salt_length], 'big')
-            format_str = "%04x: %0" + str(2*fld_Salt_length) + "x %2s %-24s %d"
-            print(format_str %(i, fld_Salt_value, "", "Salt value:", fld_Salt_value))
+            format_str = "{0:04x}: {1:0" + str(2*fld_Salt_length) + "x} {2:2} {3:<24} {4:d}"
+            print(format_str.format(i, fld_Salt_value, "", "Salt value:", fld_Salt_value))
             i += fld_Salt_length
 
         elif type_name == "DS":
             i_start = i
 
             fld_Key_id = (data[i] << 8) + data[i + 1]
-            print("%04x: %04x %8s %-12s %d" %(i, fld_Key_id, "", "Key_id:", fld_Key_id))
+            print("{0:04x}: {1:04x} {2:8} {3:<12} {4:d}".format(i, fld_Key_id, "", "Key_id:", fld_Key_id))
             i += 2
 
             fld_Algorithm = data[i]
-            print("%04x: %02x %10s %-12s %s(%d)" %(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
+            print("{0:04x}: {1:02x} {2:10} {3:<12} {4}({5:d})".format(i, fld_Algorithm, "", "Algorithm:", get_algorithm(fld_Algorithm)[0], fld_Algorithm))
             i += 1
 
             fld_Digest_type = data[i]
-            print("%04x: %02x %10s %-12s %s(%d)" %(i, fld_Digest_type, "", "Digest type:", get_digest_type(fld_Digest_type), fld_Digest_type))
+            print("{0:04x}: {1:02x} {2:10} {3:<12} {4}({5:d})".format(i, fld_Digest_type, "", "Digest type:", get_digest_type(fld_Digest_type), fld_Digest_type))
             i += 1
 
             fld_Public_Key_size = fld_data_length - (i - i_start)
             fld_Public_Key = data[i:i + fld_Public_Key_size]
-            format_str = "%04x: %0" + str(2*fld_Public_Key_size) + "x %13s %s"
-            print(format_str %(i, int.from_bytes(fld_Public_Key, 'big'), "", "Digest:"), end = "")
+            format_str = "{0:04x}: {1:0" + str(2*fld_Public_Key_size) + "x}\n {2:18} {3:<24}"
+            print(format_str.format(i, int.from_bytes(fld_Public_Key, 'big'), "", "Digest:"), end = "")
             print_result_bin(fld_Public_Key)
             i += fld_Public_Key_size
 
         elif type_name == "AAAA":
-            print("%04x: %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n %18s %s %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x" %(i,
+            print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x}{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}{11:02x}{12:02x}{13:02x}{14:02x}{15:02x}{16:02x}\n {17:18} {18} {1:02x}{2:02x}:{3:02x}{4:02x}:{5:02x}{6:02x}:{7:02x}{8:02x}:{9:02x}{10:02x}:{11:02x}{12:02x}:{13:02x}{14:02x}:{15:02x}{16:02x}".format(i,
                 data[i], data[i + 1], data[i + 2], data[i + 3],
                 data[i + 4], data[i + 5], data[i + 6], data[i + 7],
                 data[i + 8], data[i + 9], data[i + 10], data[i + 11],
                 data[i + 12], data[i + 13], data[i + 14], data[i + 15],
                 "",
-                "Addr:",
-                data[i], data[i + 1], data[i + 2], data[i + 3],
-                data[i + 4], data[i + 5], data[i + 6], data[i + 7],
-                data[i + 8], data[i + 9], data[i + 10], data[i + 11],
-                data[i + 12], data[i + 13], data[i + 14], data[i + 15]))
+                "Addr:"))
+
             i += fld_data_length
 
         elif type_name == "PTR":
             i_current = i
             i, result = get_name(data, i)
             result_length = i - i_current
-            format_str = "%04x: %0" + str(2*result_length) + "x\n %18s %-24s %s"
-            print(format_str %(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big') ,"", "Domain Name:", result))
+            format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big') ,"", "Domain Name:", result))
 
         else:
             fld_other = data[i:i + fld_data_length]
-            format_str = "%04x: %0" + str(2*fld_data_length) + "x %12s %s"
-            print(format_str %(i, int.from_bytes(fld_other, 'big'), "Data:", fld_other))
+            format_str = "{0:04x}: {1:0" + str(2*fld_data_length) + "x} {2:12} {3}"
+            print(format_str.format(i, int.from_bytes(fld_other, 'big'), "Data:", fld_other))
             i += fld_data_length
 
 
@@ -691,9 +689,9 @@ def print_result(target_str):
     col = 0
     for i in range(len(target_str)):
         if col % 16 == 0 and col >= 16:
-            print("\n%44s %02x" %("", ord(target_str[i])), end = "")
+            print("\n{0:44} {1:02x}".format("", ord(target_str[i])), end = "")
         else:
-            print(" %02x" %ord(target_str[i]), end = "")
+            print(" {0:02x}".format(ord(target_str[i])), end = "")
         col += 1
     print()
 
@@ -702,9 +700,9 @@ def print_result_bin(target_str):
     col = 0
     for i in range(len(target_str)):
         if col % 16 == 0 and col >= 16:
-            print("\n%44s %02x" %("", ord(chr(target_str[i]))), end = "")
+            print("\n{0:44} {1:02x}".format("", ord(chr(target_str[i]))), end = "")
         else:
-            print(" %02x" %ord(chr(target_str[i])), end = "")
+            print(" {0:02x}".format(ord(chr(target_str[i]))), end = "")
         col += 1
     print()
 
