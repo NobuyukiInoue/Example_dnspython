@@ -410,7 +410,7 @@ def print_name(data, i):
 def get_answer(data, i):
     while i < len(data):
         print("\n"
-              "%04x: %13s %s" %(i, "", "Answers:"))
+              "{0:04x}: {1:13} {2}".format(i, "", "Answers:"))
 
         result_bits = ((data[i] << 8) + data[i + 1]) & 0xC000
 
