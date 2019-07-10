@@ -216,6 +216,17 @@ def get_class(int_class):
         return ""
 
 
+def get_dhms(ttl):
+    day_seconds = 24*60*60
+    d = ttl // day_seconds
+    t = ttl % day_seconds
+    ss = t % 60
+    mm = t // 60
+    hh = mm // 60
+    mm = mm % 60
+    return "{0:d} day {1:02d}:{2:02d}:{3:02d}".format(d, hh, mm, ss)
+
+
 def get_algorithm(byte_algorithm):
     if byte_algorithm == 1:
         return ("MD5", 128)
@@ -430,7 +441,7 @@ def get_answer(data, i):
         i += 2
 
         fld_ttl = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3] 
-        print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_ttl, "", "Time to live:", fld_ttl))
+        print("{0:04x}: {1:08x} {2:4} {3:<24} {4}({5:d})".format(i, fld_ttl, "", "Time to live:", get_dhms(fld_ttl), fld_ttl))
         i += 4
 
         fld_data_length = (data[i] << 8) + data[i + 1]
@@ -482,7 +493,7 @@ def get_answer(data, i):
             i += 4
 
             Minimum_TTL = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, Minimum_TTL, "", "Minimum TTL:", Minimum_TTL))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4}({5:d})".format(i, Minimum_TTL, "", "Minimum TTL:", get_dhms(Minimum_TTL), Minimum_TTL))
             i += 4
 
         elif type_name == 'A' or type_name == 'CNAME':
@@ -518,7 +529,7 @@ def get_answer(data, i):
             i += 1
 
             fld_Original_TTL = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
-            print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_Original_TTL, "", "Original TTL:", fld_Original_TTL))
+            print("{0:04x}: {1:08x} {2:4} {3:<24} {4}({5:d})".format(i, fld_Original_TTL, "", "Original TTL:", get_dhms(fld_Original_TTL), fld_Original_TTL))
             i += 4
 
             fld_Signature_expiration = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
