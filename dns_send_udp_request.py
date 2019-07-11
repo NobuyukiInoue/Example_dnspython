@@ -327,7 +327,7 @@ def print_recv_data(data):
 
 
 def print_flags(flags):
-    print(" {0:21}".format("/*"))
+    print("/*")
 
     QR = (flags & 0x8000) >> 15
     label = "[bit 0]     QR"
@@ -404,7 +404,7 @@ def print_flags(flags):
     else:
         print("{0:21} {1:<20}({2:d}) {3}".format("", label, RCODE, "... (unknown)"))
 
-    print(" {0:21}".format("*/"))
+    print("*/")
 
 
 def print_name(data, i):
@@ -644,15 +644,6 @@ def get_answer(data, i):
             i += fld_Public_Key_size
 
         elif type_name == "AAAA":
-            """
-            print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x}{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}{11:02x}{12:02x}{13:02x}{14:02x}{15:02x}{16:02x}\n {17:18} {18} {1:02x}{2:02x}:{3:02x}{4:02x}:{5:02x}{6:02x}:{7:02x}{8:02x}:{9:02x}{10:02x}:{11:02x}{12:02x}:{13:02x}{14:02x}:{15:02x}{16:02x}".format(i,
-                data[i], data[i + 1], data[i + 2], data[i + 3],
-                data[i + 4], data[i + 5], data[i + 6], data[i + 7],
-                data[i + 8], data[i + 9], data[i + 10], data[i + 11],
-                data[i + 12], data[i + 13], data[i + 14], data[i + 15],
-                "",
-                "Addr:"))
-            """
             print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x}{5:02x}{6:02x}{7:02x}{8:02x}{9:02x}{10:02x}{11:02x}{12:02x}{13:02x}{14:02x}{15:02x}{16:02x}\n {17:18} {18} {19}".format(i,
                 data[i], data[i + 1], data[i + 2], data[i + 3],
                 data[i + 4], data[i + 5], data[i + 6], data[i + 7],

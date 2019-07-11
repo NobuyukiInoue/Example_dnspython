@@ -6,7 +6,6 @@ import socket
 import sys
 import time
 
-
 def main():
     argv = sys.argv
     argc = len(argv)
@@ -21,6 +20,14 @@ def main():
     else:
         recordtype = argv[2]
 
+    if is_ipv4_addr(resolvstring):
+        ipaddr = resolvstring.split(".")
+        resolvstring = ipaddr[3] + "." + ipaddr[2] + "." + ipaddr[1] + "." + ipaddr[0] + ".in-addr.arpa"
+
+    if recordtype == "PTR" and ".in-addr.arpa" not in resolvstring:
+        print("\"in-addr.arpa\" not in {0}".format(resolvstring))
+        exit(1)
+
     recordtype = recordtype.upper()
 
     printmode = False
@@ -29,13 +36,7 @@ def main():
             printmode = True
 
     try:
-        answers = ""
-        if recordtype == "PTR":
-            #answers = dns.reversename.from_address(resolvstring)
-            answers = socket.gethostbyaddr(resolvstring)[0]
-        else:
-            answers = dns.resolver.query(resolvstring, recordtype)
-
+        answers = dns.resolver.query(resolvstring, recordtype)
     except Exception as e:
         print(e.args)
         exit(1)
@@ -61,10 +62,23 @@ def main():
         print_result(result, printmode)
 
     elif recordtype == "PTR":
-        print(answers)
+        result = result_to_list_ptr(answers.response.answer[0].items)
+        print_result(result, printmode)
 
     else:
         print("%s is not defined." %recordtype)
+
+
+def is_ipv4_addr(resolvstr):
+    flds = resolvstr.split(".")
+    if len(flds) != 4:
+        return False
+    for oct in flds:
+        if not oct.isdecimal():
+            return False
+        if int(oct) < 0 or int(oct) > 255:
+            return False
+    return True
 
 
 def result_to_list_ns(items):
@@ -117,6 +131,19 @@ def result_to_list_mx(items):
     result = []
     for sv in items:
         result.append(sv)
+    result.sort()
+    return result
+
+
+def result_to_list_ptr(items):
+    result = []
+    for sv in items:
+        for i in range(len(sv.target.labels)):
+            if i == 0:
+                fqdn = sv.target.labels[i].decode()
+            else:
+                fqdn += "." + sv.target.labels[i].decode()
+        result.append(fqdn)
     result.sort()
     return result
 
