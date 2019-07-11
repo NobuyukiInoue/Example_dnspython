@@ -20,11 +20,13 @@ python dns_send_udp_request.py [dns server] [resolv string] [record type]
 * MX(15)
 * TXT(16)
 * AAAA(28)
+* SRV(33)
 * DS(43)
 * RRSIG(46)
 * DNSKEY(48)
 * NSEC3(50)
 * NSEC3PARAM(51)
+* CAA(257)
 
 ### 1-1. request ANY Record
 
@@ -35,11 +37,19 @@ or
 ```
 python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com any
 ```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com 255
+```
 
 ### 1-2. request A Record
 
 ```
 python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com a
+```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com 1
 ```
 
 ### 1-3. request CNAME Record
@@ -47,11 +57,19 @@ python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com a
 ```
 python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com cname
 ```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 www.hackerzlab.com 5
+```
 
 ### 1-4. request NS Record
 
 ```
 python dns_send_udp_request.py 192.168.1.1 hackerzlab.com ns
+```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 hackerzlab.com 2
 ```
 
 ### 1-5. request MX Record
@@ -59,11 +77,19 @@ python dns_send_udp_request.py 192.168.1.1 hackerzlab.com ns
 ```
 python dns_send_udp_request.py 192.168.1.1 hackerzlab.com mx
 ```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 hackerzlab.com 15
+```
 
 ### 1-6. request SOA Record
 
 ```
 python dns_send_udp_request.py 192.168.1.1 hackerzlab.com soa
+```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 hackerzlab.com 6
 ```
 
 ### 1-7. request PTR Record
@@ -71,6 +97,31 @@ python dns_send_udp_request.py 192.168.1.1 hackerzlab.com soa
 ```
 python dns_send_udp_request.py 192.168.1.1 8.8.8.8 ptr
 ```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 8.8.8.8 12
+```
+
+### 1-8. request CAA Record
+
+```
+python dns_send_udp_request.py 192.168.1.1 hackerzlab.com caa
+```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 hackerzlab.com 257
+```
+
+### 1-9. request SRV Record
+
+```
+python dns_send_udp_request.py 192.168.1.1 _http._tcp.hackerzlab.com srv
+```
+or
+```
+python dns_send_udp_request.py 192.168.1.1 _http._tcp.hackerzlab.com 33
+```
+
 
 ## 2. Example for dns_resolv.py
 

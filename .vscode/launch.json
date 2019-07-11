@@ -15,6 +15,16 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Python: hackerzlab.com",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "hackerzlab.com"
+            ]
+        },
+        {
             "name": "Python: hackerzlab.com soa",
             "type": "python",
             "request": "launch",
@@ -212,6 +222,16 @@
             "console": "integratedTerminal",
             "args":[
                 "192.168.100.1", "gov", "ds"
+            ]
+        },
+        {
+            "name": "Python: 127.0.0.1 _http._tcp.example.com srv",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":[
+                "127.0.0.1", "_http._tcp.example.com", "srv"
             ]
         }
     ]

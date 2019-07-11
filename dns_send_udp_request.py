@@ -124,6 +124,10 @@ def set_data(Transaction_ID, resolvstring, type):
 
 
 def set_type(type):
+    if type.isnumeric() == True:
+        if int(type) > 0:
+            return int(type).to_bytes(2, 'big')
+
     # Type
     if type == None:
         return 0x00ff.to_bytes(2, 'big')
@@ -143,6 +147,8 @@ def set_type(type):
         return 0x0010.to_bytes(2, 'big')
     elif type == 'AAAA':
         return 0x001c.to_bytes(2, 'big')
+    elif type == 'SRV':
+        return 0x0021.to_bytes(2, 'big')
     elif type == 'DS':
         return 0x002b.to_bytes(2, 'big')
     elif type == 'RRSIG':
@@ -153,6 +159,8 @@ def set_type(type):
         return 0x0032.to_bytes(2, 'big')
     elif type == 'NSEC3PARAM':
         return 0x0033.to_bytes(2, 'big')
+    elif type == 'CAA':
+        return 0x0101.to_bytes(2, 'big')
     elif type == 'ANY':
         return 0x00ff.to_bytes(2, 'big')
     else:
@@ -185,6 +193,8 @@ def get_type(int_type):
         return "TXT"
     elif int_type == 28:
         return "AAAA"
+    elif int_type == 33:
+        return "SRV"
     elif int_type == 43:
         return "DS"
     elif int_type == 46:
@@ -195,6 +205,8 @@ def get_type(int_type):
         return "NSEC3"
     elif int_type == 51:
         return "NSEC3PARAM"
+    elif int_type == 257:
+        return "CAA"
     else:
         return ""
 
@@ -651,6 +663,27 @@ def get_answer(data, i):
                 data[i + 12], data[i + 13], data[i + 14], data[i + 15],
                 "", "Addr:", get_stripv6addr(data[i:i + 16])))
             i += fld_data_length
+
+        elif type_name == "SRV":
+            i_start = i
+
+            fld_Priority = (data[i] << 8) + data[i + 1]
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Priority, "", "Priority:", fld_Priority))
+            i += 2
+
+            fld_Weight = (data[i] << 8) + data[i + 1]
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Weight, "", "Weight:", fld_Weight))
+            i += 2
+
+            fld_Port = (data[i] << 8) + data[i + 1]
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Port, "", "Port:", fld_Port))
+            i += 2
+
+            i_current = i
+            i, result = get_name(data, i)
+            result_length = i - i_current
+            format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big') ,"", "Target:", result))
 
         elif type_name == "PTR":
             i_current = i

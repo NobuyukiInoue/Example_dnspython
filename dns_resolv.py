@@ -16,6 +16,7 @@ def main():
     resolvstring = argv[1]
 
     if argc < 3:
+        # recordtype = "ANY"    # DNS metaqueris a not allowd.
         recordtype = "NS"
     else:
         recordtype = argv[2]
@@ -41,32 +42,34 @@ def main():
         print(e.args)
         exit(1)
 
-    if recordtype == "SOA":
-        result = result_to_list_soa(answers.response.answer[0].items)
-        print_result(result, printmode)
+    for answer in answers.response.answer:
+        result_recordtype = get_type(answer.rdtype)
+        if result_recordtype == "SOA":
+            result = result_to_list_soa(answer.items)
+            print_result(result, printmode)
 
-    elif recordtype == "NS":
-        result = result_to_list_ns(answers.response.answer[0].items)
-        print_result(result, printmode)
+        elif result_recordtype == "NS":
+            result = result_to_list_ns(answer.items)
+            print_result(result, printmode)
 
-    elif recordtype == "MX":
-        result = result_to_list_mx(answers.response.answer[0].items)
-        print_result(result, printmode)
-    
-    elif recordtype == "A":
-        result = result_to_list_a(answers.response.answer[1].items)
-        print_result(result, printmode)
+        elif result_recordtype == "MX":
+            result = result_to_list_mx(answer.items)
+            print_result(result, printmode)
+        
+        elif result_recordtype == "A":
+            result = result_to_list_a(answer.items)
+            print_result(result, printmode)
 
-    elif recordtype == "CNAME":
-        result = result_to_list_ns(answers.response.answer[0].items)
-        print_result(result, printmode)
+        elif result_recordtype == "CNAME":
+            result = result_to_list_ns(answer.items)
+            print_result(result, printmode)
 
-    elif recordtype == "PTR":
-        result = result_to_list_ptr(answers.response.answer[0].items)
-        print_result(result, printmode)
+        elif result_recordtype == "PTR":
+            result = result_to_list_ptr(answers.items)
+            print_result(result, printmode)
 
-    else:
-        print("%s is not defined." %recordtype)
+        else:
+            print("%s is not defined." %result_recordtype)
 
 
 def is_ipv4_addr(resolvstr):
@@ -79,6 +82,46 @@ def is_ipv4_addr(resolvstr):
         if int(oct) < 0 or int(oct) > 255:
             return False
     return True
+
+
+def get_type(int_type):
+    """
+    RFC 1035
+    https://www.ietf.org/rfc/rfc1035.txt
+
+    Wikipedia - List of DNS record type
+    https://ja.wikipedia.org/wiki/DNS%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%97%E3%81%AE%E4%B8%80%E8%A6%A7
+    """
+    if int_type == 255:
+        return "ANY"
+    elif int_type == 1:
+        return "A"
+    elif int_type == 2:
+        return "NS"
+    elif int_type == 5:
+        return "CNAME"
+    elif int_type == 6:
+        return "SOA"
+    elif int_type == 12:
+        return "PTR"
+    elif int_type == 15:
+        return "MX"
+    elif int_type == 16:
+        return "TXT"
+    elif int_type == 28:
+        return "AAAA"
+    elif int_type == 43:
+        return "DS"
+    elif int_type == 46:
+        return "RRSIG"
+    elif int_type == 48:
+        return "DNSKEY"
+    elif int_type == 50:
+        return "NSEC3"
+    elif int_type == 51:
+        return "NSEC3PARAM"
+    else:
+        return ""
 
 
 def result_to_list_ns(items):
