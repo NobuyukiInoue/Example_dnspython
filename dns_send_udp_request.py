@@ -58,8 +58,13 @@ def main():
           "============================================================================================"
         .format(address[0], address[1], len(data_recv), len(data_recv), (time_end - time_start)*1000))
 
-    print_recv_data(data_recv)
+    readbytes_count = print_recv_data(data_recv)
     print("============================================================================================")
+
+    if readbytes_count == len(data_recv):
+        print("Finish reading.")
+    else:
+        print("There is a reading error.")
 
 
 def exit_data_send(argv0):
@@ -335,7 +340,11 @@ def print_recv_data(data):
     print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_class, "", "Class:", get_class(fld_class), fld_class))
     i += 2
 
-    get_answer(data, i)
+    i = get_answer(data, i, "Answer", fld_Anser_RRS)
+    i = get_answer(data, i, "Authority", fld_Authority_RRS)
+    i = get_answer(data, i, "Additional", fld_Anser_RRS)
+
+    return i
 
 
 def print_flags(flags):
@@ -436,10 +445,11 @@ def print_name(data, i):
     return i
 
 
-def get_answer(data, i):
-    while i < len(data):
+def get_answer(data, i, title, record_length):
+    record_count = 0
+    while i < len(data) and record_count < record_length:
         print("\n"
-              "{0:04x}: {1:13} {2}".format(i, "", "Answers:"))
+              "{0:04x}: {1:13} {2}".format(i, "", title + "[" + str(record_count) + "]:"))
 
         result_bits = ((data[i] << 8) + data[i + 1]) & 0xC000
 
@@ -698,6 +708,9 @@ def get_answer(data, i):
             print(format_str.format(i, int.from_bytes(fld_other, 'big'), "Data:", fld_other))
             i += fld_data_length
 
+        record_count += 1
+
+    return i
 
 def get_name(data, i):
     result = ""
