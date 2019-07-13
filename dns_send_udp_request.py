@@ -429,18 +429,18 @@ def print_flags(flags):
 
 
 def print_name(data, i):
-    i_current = i
-    i, fld_name = get_name(data, i)
+    fld_name, name_length = get_name(data, i)
 
-    if data[i_current] == 0x00:
-        print("{0:04x}: {1:02x} {2:10} {3:<24} {4:}".format(i_current, data[i_current], "", "Name:", "<Root>"))
+    if data[i] == 0x00:
+        print("{0:04x}: {1:02x} {2:10} {3:<24} {4:}".format(i, data[i], "", "Name:", "<Root>"))
     else:
-        name_length = i - i_current
         if 2*name_length < 13:
             format_str = "{0:04x}: {1:0" + str(2*name_length) + "x} {2:" + str(13 - 2*name_length) + "}{3:<24} {4}"
         else:
             format_str = "{0:04x}: {1:0" + str(2*name_length) + "x} {2} {3:<24} {4}"
-        print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + name_length], 'big') , "", "Name:", fld_name))
+        print(format_str.format(i, int.from_bytes(data[i:i + name_length], 'big') , "", "Name:", fld_name))
+
+    i += name_length
 
     return i
 
@@ -456,7 +456,7 @@ def get_answer(data, i, title, record_length):
         if result_bits == 0xc000:
             name_hex = (data[i] << 8) + data[i + 1]
             result_pos = name_hex & 0x3fff
-            _, fld_name = get_name(data, result_pos)
+            fld_name, _ = get_name(data, result_pos)
             print("{0:04x}: {1:04x} {2:8} {3:<24} {4}".format(i, int.from_bytes(data[i:i + 2], 'big') , "", "Name:", fld_name))
             i += 2
 
@@ -496,24 +496,21 @@ def get_answer(data, i, title, record_length):
             print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Preference, "", "fld_Preference:", fld_Preference))
             i += 2
 
-            i_current = i
-            i, result = get_name(data, i)
-            fld_Mail_Exchange_length = i - i_current
-            format_str = "{0:04x}: {1:0" + str(2*fld_Mail_Exchange_length) + "x}\n {2:18} {3:<24} {4}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_Mail_Exchange_length], 'big'), "", "Mail exchange:", result))
+            result, result_length = get_name(data, i)
+            format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big'), "", "Mail exchange:", result))
+            i += result_length
 
         elif type_name == 'SOA':
-            i_current = i
-            i, fld_primary_name_server = get_name(data, i)
-            fld_primary_name_server_length = i - i_current
-            format_str = "{0:04x}: {1:0" + str(2*fld_primary_name_server_length) + "x}\n {2:18} {3:<24} {4}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_primary_name_server_length], 'big'), "", "Primary name server:", fld_primary_name_server))
+            fld_primary_name_server, result_length = get_name(data, i)
+            format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big'), "", "Primary name server:", fld_primary_name_server))
+            i += result_length
 
-            i_current = i
-            i, fld_Responsivle_authoritys_mailbox = get_name(data, i)
-            fld_Responsivle_authoritys_mailbox_length = i - i_current
-            format_str = "{0:04x}: {1:0" + str(2*fld_Responsivle_authoritys_mailbox_length) + "x} \n {2:18} {3:<24} {4}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_Responsivle_authoritys_mailbox_length], 'big'), "", "Responsivle authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
+            fld_Responsivle_authoritys_mailbox, length = get_name(data, i)
+            format_str = "{0:04x}: {1:0" + str(2*length) + "x} \n {2:18} {3:<24} {4}"
+            print(format_str.format(i, int.from_bytes(data[i:i + length], 'big'), "", "Responsivle authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
+            i += length
 
             Serial_number = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
             print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, Serial_number, "", "Serial number:", Serial_number))
@@ -540,11 +537,10 @@ def get_answer(data, i, title, record_length):
                 print("{0:04x}: {1:02x}{2:02x}{3:02x}{4:02x} {5:4} {6:<24} {7:d}.{8:d}.{9:d}.{10:d}".format(i, data[i], data[i + 1], data[i + 2], data[i + 3], "", "Addr:", data[i], data[i + 1], data[i + 2], data[i + 3]))
                 i += 4
             else:
-                i_current = i
-                i, result = get_name(data, i)
-                result_length = i - i_current
+                result, result_length = get_name(data, i)
                 format_str = "{0:04x}: {1:0" + str(2*result_length) + "x} \n {2:18} {3:<24} {4}"
-                print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big'), "", "Primary name:", result))
+                print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big'), "", "Primary name:", result))
+                i += result_length
 
         elif type_name == "TXT":
             fld_Text = data[i:i + fld_data_length]
@@ -583,11 +579,10 @@ def get_answer(data, i, title, record_length):
             print("{0:04x}: {1:08x} {2:4} {3:<24} {4:d}".format(i, fld_Id_of_signing_key, "", "Id of signing key:", fld_Id_of_signing_key))
             i += 2
 
-            i_current = i
-            i, result = get_name(data, i)
-            fld_Signers_name_length = i - i_current
-            format_str = "{0:04x}: {1:0" + str(2*fld_Signers_name_length) + "x}\n {2:18} {3:<24} {4}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + fld_Signers_name_length], 'big'), "", "Signer's name:", result))
+            result, result_length = get_name(data, i)
+            format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big'), "", "Signer's name:", result))
+            i += result_length
 
             signature_size = fld_data_length - (i - i_start)
 
@@ -689,18 +684,16 @@ def get_answer(data, i, title, record_length):
             print("{0:04x}: {1:04x} {2:8} {3:<24} {4:d}".format(i, fld_Port, "", "Port:", fld_Port))
             i += 2
 
-            i_current = i
-            i, result = get_name(data, i)
-            result_length = i - i_current
+            result, result_length = get_name(data, i)
             format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big') ,"", "Target:", result))
+            print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big') ,"", "Target:", result))
+            i += result_length
 
         elif type_name == "PTR":
-            i_current = i
-            i, result = get_name(data, i)
-            result_length = i - i_current
+            result, result_length = get_name(data, i)
             format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + result_length], 'big') ,"", "Domain Name:", result))
+            print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big') ,"", "Domain Name:", result))
+            i += result_length
 
         else:
             fld_other = data[i:i + fld_data_length]
@@ -714,6 +707,7 @@ def get_answer(data, i, title, record_length):
 
 def get_name(data, i):
     result = ""
+    start_i = i
     while i < len(data):
         fld_length = data[i]
         if fld_length == 0:
@@ -728,7 +722,7 @@ def get_name(data, i):
         result_bits = ((data[i] << 8) + data[i + 1]) & 0xC000
         if result_bits == 0xc000:
             result_pos = ((data[i] << 8) + data[i + 1]) & 0x3fff
-            _, pre_name = get_name(data, result_pos)
+            pre_name, _ = get_name(data, result_pos)
             result += "[." + pre_name + "]"
             i += 2
             break
@@ -753,7 +747,7 @@ def get_name(data, i):
         if i >= len(data):
             break
 
-    return i, result
+    return result, i - start_i
 
 
 def get_signature(data, i, size):
