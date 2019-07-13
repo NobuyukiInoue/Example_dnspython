@@ -1,0 +1,1290 @@
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = .
+record type   = ANY
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x017a(378) bytes.
+Response time : 73.996544[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8380          Flags:                   0b1000001110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (1) ... Flagment occur
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 00            Name:                    <Root>
+000d: 00ff          Type:                    ANY(255)
+000f: 0001          Class:                   IN(1)
+
+0011:               Answer[0]:
+0011: 00            Name:                    <Root>
+0012: 0006          Type:                    SOA(6)
+0014: 0001          Class:                   IN(1)
+0016: 00011751      Time to live:            0 day 19:51:45(71505)
+001a: 0040          data_length:             64
+001c: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0030: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+0048: 78589544      Serial number:           2019071300
+004c: 00001800      Refresh interval:        1800
+0050: 00000384      Retry interval:          900
+0054: 00093a80      Expiration limit:        604800
+0058: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+
+005c:               Answer[1]:
+005c: 00            Name:                    <Root>
+005d: 002e          Type:                    RRSIG(46)
+005f: 0001          Class:                   IN(1)
+0061: 00011751      Time to live:            0 day 19:51:45(71505)
+0065: 0113          data_length:             275
+0067: 0006          Type covered:            6
+0069: 0008          Algorithm:               SHA256(8)
+006a: 00            Labels:                  0
+006b: 00015180      Original TTL:            1 day 00:00:00(86400)
+006f: 5d3a88d0      fld_Signature_expiration: 1564117200
+0073: 5d295740      Time signed:             1562990400
+0077: 0000ea28      Id of signing key:       59944
+0079: 00
+                    Signer's name:           <Root>
+007a: 14220a36c94c2a73a67c4261a4a2d3094743171611a91c53bb61c8756157074cfc24a1b96959b3d45dd02ae2f6c5f9a48b48e8cfe1b001290a64ec7b4883c0f00a5506804d63b3d3bf69a7645a7bd2cad03c34408936a247bce6b163302deeb1a9623f0ba42feb3915053314c2bccf087eb986bf0fa0f96a6d54441310ba698253626471a0a99d9e7e21ed4f951058a7ffc8b144a3358dafc2223b153622ae07ba3613dd2a881cc4e20a128db91119c1bbd306318b64be26f5c174d2e5ad2d458acb7ac51c6c6de491b84700c1ac897b0588dc534bf4267231857f75a70797d282700aa9af70110aa99c6c7c265da0a0c20fc7d1bd4804bacdae493e50f42ff6
+                    Signature:               14 22 0a 36 c9 4c 2a 73 a6 7c 42 61 a4 a2 d3 09
+                                             47 43 17 16 11 a9 1c 53 bb 61 c8 75 61 57 07 4c
+                                             fc 24 a1 b9 69 59 b3 d4 5d d0 2a e2 f6 c5 f9 a4
+                                             8b 48 e8 cf e1 b0 01 29 0a 64 ec 7b 48 83 c0 f0
+                                             0a 55 06 80 4d 63 b3 d3 bf 69 a7 64 5a 7b d2 ca
+                                             d0 3c 34 40 89 36 a2 47 bc e6 b1 63 30 2d ee b1
+                                             a9 62 3f 0b a4 2f eb 39 15 05 33 14 c2 bc cf 08
+                                             7e b9 86 bf 0f a0 f9 6a 6d 54 44 13 10 ba 69 82
+                                             53 62 64 71 a0 a9 9d 9e 7e 21 ed 4f 95 10 58 a7
+                                             ff c8 b1 44 a3 35 8d af c2 22 3b 15 36 22 ae 07
+                                             ba 36 13 dd 2a 88 1c c4 e2 0a 12 8d b9 11 19 c1
+                                             bb d3 06 31 8b 64 be 26 f5 c1 74 d2 e5 ad 2d 45
+                                             8a cb 7a c5 1c 6c 6d e4 91 b8 47 00 c1 ac 89 7b
+                                             05 88 dc 53 4b f4 26 72 31 85 7f 75 a7 07 97 d2
+                                             82 70 0a a9 af 70 11 0a a9 9c 6c 7c 26 5d a0 a0
+                                             c2 0f c7 d1 bd 48 04 ba cd ae 49 3e 50 f4 2f f6
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = a
+record type   = N
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 145.995140[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016100        Name:                    a
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfbc      Time to live:            0 day 13:38:04(49084)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = .
+record type   = ANY
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x017a(378) bytes.
+Response time : 93.039751[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8380          Flags:                   0b1000001110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (1) ... Flagment occur
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 00            Name:                    <Root>
+000d: 00ff          Type:                    ANY(255)
+000f: 0001          Class:                   IN(1)
+
+0011:               Answer[0]:
+0011: 00            Name:                    <Root>
+0012: 0006          Type:                    SOA(6)
+0014: 0001          Class:                   IN(1)
+0016: 00011750      Time to live:            0 day 19:51:44(71504)
+001a: 0040          data_length:             64
+001c: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0030: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+0048: 78589544      Serial number:           2019071300
+004c: 00001800      Refresh interval:        1800
+0050: 00000384      Retry interval:          900
+0054: 00093a80      Expiration limit:        604800
+0058: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+
+005c:               Answer[1]:
+005c: 00            Name:                    <Root>
+005d: 002e          Type:                    RRSIG(46)
+005f: 0001          Class:                   IN(1)
+0061: 00011750      Time to live:            0 day 19:51:44(71504)
+0065: 0113          data_length:             275
+0067: 0006          Type covered:            6
+0069: 0008          Algorithm:               SHA256(8)
+006a: 00            Labels:                  0
+006b: 00015180      Original TTL:            1 day 00:00:00(86400)
+006f: 5d3a88d0      fld_Signature_expiration: 1564117200
+0073: 5d295740      Time signed:             1562990400
+0077: 0000ea28      Id of signing key:       59944
+0079: 00
+                    Signer's name:           <Root>
+007a: 14220a36c94c2a73a67c4261a4a2d3094743171611a91c53bb61c8756157074cfc24a1b96959b3d45dd02ae2f6c5f9a48b48e8cfe1b001290a64ec7b4883c0f00a5506804d63b3d3bf69a7645a7bd2cad03c34408936a247bce6b163302deeb1a9623f0ba42feb3915053314c2bccf087eb986bf0fa0f96a6d54441310ba698253626471a0a99d9e7e21ed4f951058a7ffc8b144a3358dafc2223b153622ae07ba3613dd2a881cc4e20a128db91119c1bbd306318b64be26f5c174d2e5ad2d458acb7ac51c6c6de491b84700c1ac897b0588dc534bf4267231857f75a70797d282700aa9af70110aa99c6c7c265da0a0c20fc7d1bd4804bacdae493e50f42ff6
+                    Signature:               14 22 0a 36 c9 4c 2a 73 a6 7c 42 61 a4 a2 d3 09
+                                             47 43 17 16 11 a9 1c 53 bb 61 c8 75 61 57 07 4c
+                                             fc 24 a1 b9 69 59 b3 d4 5d d0 2a e2 f6 c5 f9 a4
+                                             8b 48 e8 cf e1 b0 01 29 0a 64 ec 7b 48 83 c0 f0
+                                             0a 55 06 80 4d 63 b3 d3 bf 69 a7 64 5a 7b d2 ca
+                                             d0 3c 34 40 89 36 a2 47 bc e6 b1 63 30 2d ee b1
+                                             a9 62 3f 0b a4 2f eb 39 15 05 33 14 c2 bc cf 08
+                                             7e b9 86 bf 0f a0 f9 6a 6d 54 44 13 10 ba 69 82
+                                             53 62 64 71 a0 a9 9d 9e 7e 21 ed 4f 95 10 58 a7
+                                             ff c8 b1 44 a3 35 8d af c2 22 3b 15 36 22 ae 07
+                                             ba 36 13 dd 2a 88 1c c4 e2 0a 12 8d b9 11 19 c1
+                                             bb d3 06 31 8b 64 be 26 f5 c1 74 d2 e5 ad 2d 45
+                                             8a cb 7a c5 1c 6c 6d e4 91 b8 47 00 c1 ac 89 7b
+                                             05 88 dc 53 4b f4 26 72 31 85 7f 75 a7 07 97 d2
+                                             82 70 0a a9 af 70 11 0a a9 9c 6c 7c 26 5d a0 a0
+                                             c2 0f c7 d1 bd 48 04 ba cd ae 49 3e 50 f4 2f f6
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = n
+record type   = S
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 162.694931[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016e00        Name:                    n
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfbb      Time to live:            0 day 13:38:03(49083)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 142.005444[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfbb      Time to live:            0 day 13:38:03(49083)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = a
+record type   = N
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 118.999481[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016100        Name:                    a
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfbb      Time to live:            0 day 13:38:03(49083)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 124.997377[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfbb      Time to live:            0 day 13:38:03(49083)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = n
+record type   = S
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 138.998032[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016e00        Name:                    n
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfba      Time to live:            0 day 13:38:02(49082)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 152.998447[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfba      Time to live:            0 day 13:38:02(49082)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = s
+record type   = O
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 119.996786[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 017300        Name:                    s
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfba      Time to live:            0 day 13:38:02(49082)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 112.994432[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfba      Time to live:            0 day 13:38:02(49082)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = d
+record type   = N
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 171.030283[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016400        Name:                    d
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfba      Time to live:            0 day 13:38:02(49082)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 134.998798[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb9      Time to live:            0 day 13:38:01(49081)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = d
+record type   = S
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 154.998779[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016400        Name:                    d
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb9      Time to live:            0 day 13:38:01(49081)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 133.039236[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb9      Time to live:            0 day 13:38:01(49081)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = n
+record type   = S
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 110.998392[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016e00        Name:                    n
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb9      Time to live:            0 day 13:38:01(49081)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = j
+record type   = P
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 146.032572[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016a00        Name:                    j
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb8      Time to live:            0 day 13:38:00(49080)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = n
+record type   = S
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 120.002270[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016e00        Name:                    n
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb8      Time to live:            0 day 13:38:00(49080)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = f
+record type   = R
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 130.997658[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016600        Name:                    f
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb8      Time to live:            0 day 13:38:00(49080)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = a
+record type   = N
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 156.030416[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016100        Name:                    a
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb8      Time to live:            0 day 13:38:00(49080)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = _
+record type   = H
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 138.999701[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 015f00        Name:                    _
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb8      Time to live:            0 day 13:38:00(49080)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = s
+record type   = R
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 182.032108[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 017300        Name:                    s
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb7      Time to live:            0 day 13:37:59(49079)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = f
+record type   = R
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 134.916544[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016600        Name:                    f
+000f: 00ff          Type:                    ANY(255)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb7      Time to live:            0 day 13:37:59(49079)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = c
+record type   = A
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 137.997866[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8183          Flags:                   0b1000000110000011
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (3) ... Name Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 016300        Name:                    c
+000f: 0001          Type:                    A(1)
+0011: 0001          Class:                   IN(1)
+
+0013:               Authority[0]:
+0013: 00            Name:                    <Root>
+0014: 0006          Type:                    SOA(6)
+0016: 0001          Class:                   IN(1)
+0018: 0000bfb7      Time to live:            0 day 13:37:59(49079)
+001c: 0040          data_length:             64
+001e: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0032: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsivle authoritys mailbox: nstld.verisign-grs.com
+004a: 78589544      Serial number:           2019071300
+004e: 00001800      Refresh interval:        1800
+0052: 00000384      Retry interval:          900
+0056: 00093a80      Expiration limit:        604800
+005a: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+============================================================================================
+Finish reading.
