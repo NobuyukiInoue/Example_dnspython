@@ -1,0 +1,837 @@
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = .
+record type   = ANY
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x017a(378) bytes.
+Response time : 85.185766[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8380          Flags:                   0b1000001110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (1) ... Flagment occur
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 00            Name:                    <Root>
+000d: 00ff          Type:                    ANY(255)
+000f: 0001          Class:                   IN(1)
+
+0011:               Answer[0]:
+0011: 00            Name:                    <Root>
+0012: 0006          Type:                    SOA(6)
+0014: 0001          Class:                   IN(1)
+0016: 0000f317      Time to live:            0 day 17:17:11(62231)
+001a: 0040          data_length:             64
+001c: 01610c726f6f742d73657276657273036e657400
+                    Primary name server:     a.root-servers.net
+0030: 056e73746c640c766572697369676e2d67727303636f6d00 
+                    Responsible authoritys mailbox: nstld.verisign-grs.com
+0048: 78589544      Serial number:           2019071300
+004c: 00001800      Refresh interval:        1800
+0050: 00000384      Retry interval:          900
+0054: 00093a80      Expiration limit:        604800
+0058: 00015180      Minimum TTL:             1 day 00:00:00(86400)
+
+005c:               Answer[1]:
+005c: 00            Name:                    <Root>
+005d: 002e          Type:                    RRSIG(46)
+005f: 0001          Class:                   IN(1)
+0061: 0000f317      Time to live:            0 day 17:17:11(62231)
+0065: 0113          data_length:             275
+0067: 0006          Type covered:            6
+0069: 0008          Algorithm:               SHA256(8)
+006a: 00            Labels:                  0
+006b: 00015180      Original TTL:            1 day 00:00:00(86400)
+006f: 5d3a88d0      fld_Signature_expiration: 1564117200
+0073: 5d295740      Time signed:             1562990400
+0077: 0000ea28      Id of signing key:       59944
+0079: 00
+                    Signer's name:           <Root>
+007a: 14220a36c94c2a73a67c4261a4a2d3094743171611a91c53bb61c8756157074cfc24a1b96959b3d45dd02ae2f6c5f9a48b48e8cfe1b001290a64ec7b4883c0f00a5506804d63b3d3bf69a7645a7bd2cad03c34408936a247bce6b163302deeb1a9623f0ba42feb3915053314c2bccf087eb986bf0fa0f96a6d54441310ba698253626471a0a99d9e7e21ed4f951058a7ffc8b144a3358dafc2223b153622ae07ba3613dd2a881cc4e20a128db91119c1bbd306318b64be26f5c174d2e5ad2d458acb7ac51c6c6de491b84700c1ac897b0588dc534bf4267231857f75a70797d282700aa9af70110aa99c6c7c265da0a0c20fc7d1bd4804bacdae493e50f42ff6
+                    Signature:               14 22 0a 36 c9 4c 2a 73 a6 7c 42 61 a4 a2 d3 09
+                                             47 43 17 16 11 a9 1c 53 bb 61 c8 75 61 57 07 4c
+                                             fc 24 a1 b9 69 59 b3 d4 5d d0 2a e2 f6 c5 f9 a4
+                                             8b 48 e8 cf e1 b0 01 29 0a 64 ec 7b 48 83 c0 f0
+                                             0a 55 06 80 4d 63 b3 d3 bf 69 a7 64 5a 7b d2 ca
+                                             d0 3c 34 40 89 36 a2 47 bc e6 b1 63 30 2d ee b1
+                                             a9 62 3f 0b a4 2f eb 39 15 05 33 14 c2 bc cf 08
+                                             7e b9 86 bf 0f a0 f9 6a 6d 54 44 13 10 ba 69 82
+                                             53 62 64 71 a0 a9 9d 9e 7e 21 ed 4f 95 10 58 a7
+                                             ff c8 b1 44 a3 35 8d af c2 22 3b 15 36 22 ae 07
+                                             ba 36 13 dd 2a 88 1c c4 e2 0a 12 8d b9 11 19 c1
+                                             bb d3 06 31 8b 64 be 26 f5 c1 74 d2 e5 ad 2d 45
+                                             8a cb 7a c5 1c 6c 6d e4 91 b8 47 00 c1 ac 89 7b
+                                             05 88 dc 53 4b f4 26 72 31 85 7f 75 a7 07 97 d2
+                                             82 70 0a a9 af 70 11 0a a9 9c 6c 7c 26 5d a0 a0
+                                             c2 0f c7 d1 bd 48 04 ba cd ae 49 3e 50 f4 2f f6
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = .
+record type   = NS
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x00e4(228) bytes.
+Response time : 5.003691[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 000d          Answer RRS:              13
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 00            Name:                    <Root>
+000d: 0002          Type:                    NS(2)
+000f: 0001          Class:                   IN(1)
+
+0011:               Answer[0]:
+0011: 00            Name:                    <Root>
+0012: 0002          Type:                    NS(2)
+0014: 0001          Class:                   IN(1)
+0016: 0000f228      Time to live:            0 day 17:13:12(61992)
+001a: 0014          data_length:             20
+001c: 01670c726f6f742d73657276657273036e657400  Name:                    g.root-servers.net
+
+0030:               Answer[1]:
+0030: 00            Name:                    <Root>
+0031: 0002          Type:                    NS(2)
+0033: 0001          Class:                   IN(1)
+0035: 0000f228      Time to live:            0 day 17:13:12(61992)
+0039: 0004          data_length:             4
+003b: 0163c01e      Name:                    c[.root-servers.net]
+
+003f:               Answer[2]:
+003f: 00            Name:                    <Root>
+0040: 0002          Type:                    NS(2)
+0042: 0001          Class:                   IN(1)
+0044: 0000f228      Time to live:            0 day 17:13:12(61992)
+0048: 0004          data_length:             4
+004a: 016dc01e      Name:                    m[.root-servers.net]
+
+004e:               Answer[3]:
+004e: 00            Name:                    <Root>
+004f: 0002          Type:                    NS(2)
+0051: 0001          Class:                   IN(1)
+0053: 0000f228      Time to live:            0 day 17:13:12(61992)
+0057: 0004          data_length:             4
+0059: 016cc01e      Name:                    l[.root-servers.net]
+
+005d:               Answer[4]:
+005d: 00            Name:                    <Root>
+005e: 0002          Type:                    NS(2)
+0060: 0001          Class:                   IN(1)
+0062: 0000f228      Time to live:            0 day 17:13:12(61992)
+0066: 0004          data_length:             4
+0068: 0161c01e      Name:                    a[.root-servers.net]
+
+006c:               Answer[5]:
+006c: 00            Name:                    <Root>
+006d: 0002          Type:                    NS(2)
+006f: 0001          Class:                   IN(1)
+0071: 0000f228      Time to live:            0 day 17:13:12(61992)
+0075: 0004          data_length:             4
+0077: 016ac01e      Name:                    j[.root-servers.net]
+
+007b:               Answer[6]:
+007b: 00            Name:                    <Root>
+007c: 0002          Type:                    NS(2)
+007e: 0001          Class:                   IN(1)
+0080: 0000f228      Time to live:            0 day 17:13:12(61992)
+0084: 0004          data_length:             4
+0086: 0169c01e      Name:                    i[.root-servers.net]
+
+008a:               Answer[7]:
+008a: 00            Name:                    <Root>
+008b: 0002          Type:                    NS(2)
+008d: 0001          Class:                   IN(1)
+008f: 0000f228      Time to live:            0 day 17:13:12(61992)
+0093: 0004          data_length:             4
+0095: 0168c01e      Name:                    h[.root-servers.net]
+
+0099:               Answer[8]:
+0099: 00            Name:                    <Root>
+009a: 0002          Type:                    NS(2)
+009c: 0001          Class:                   IN(1)
+009e: 0000f228      Time to live:            0 day 17:13:12(61992)
+00a2: 0004          data_length:             4
+00a4: 0165c01e      Name:                    e[.root-servers.net]
+
+00a8:               Answer[9]:
+00a8: 00            Name:                    <Root>
+00a9: 0002          Type:                    NS(2)
+00ab: 0001          Class:                   IN(1)
+00ad: 0000f228      Time to live:            0 day 17:13:12(61992)
+00b1: 0004          data_length:             4
+00b3: 0164c01e      Name:                    d[.root-servers.net]
+
+00b7:               Answer[10]:
+00b7: 00            Name:                    <Root>
+00b8: 0002          Type:                    NS(2)
+00ba: 0001          Class:                   IN(1)
+00bc: 0000f228      Time to live:            0 day 17:13:12(61992)
+00c0: 0004          data_length:             4
+00c2: 0162c01e      Name:                    b[.root-servers.net]
+
+00c6:               Answer[11]:
+00c6: 00            Name:                    <Root>
+00c7: 0002          Type:                    NS(2)
+00c9: 0001          Class:                   IN(1)
+00cb: 0000f228      Time to live:            0 day 17:13:12(61992)
+00cf: 0004          data_length:             4
+00d1: 0166c01e      Name:                    f[.root-servers.net]
+
+00d5:               Answer[12]:
+00d5: 00            Name:                    <Root>
+00d6: 0002          Type:                    NS(2)
+00d8: 0001          Class:                   IN(1)
+00da: 0000f228      Time to live:            0 day 17:13:12(61992)
+00de: 0004          data_length:             4
+00e0: 016bc01e      Name:                    k[.root-servers.net]
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = ANY
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x00e5(229) bytes.
+Response time : 85.609674[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8380          Flags:                   0b1000001110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (1) ... Flagment occur
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 00ff          Type:                    ANY(255)
+0012: 0001          Class:                   IN(1)
+
+0014:               Answer[0]:
+0014: c00c          Name:                    jp
+0016: 0006          Type:                    SOA(6)
+0018: 0001          Class:                   IN(1)
+001a: 00014824      Time to live:            0 day 23:20:04(84004)
+001e: 0023          data_length:             35
+0020: 017a03646e73c00c
+                    Primary name server:     z.dns[.jp]
+0028: 04726f6f74c022 
+                    Responsible authoritys mailbox: root[.dns[.jp]]
+002f: 5d2a151a      Serial number:           1563039002
+0033: 00003600      Refresh interval:        3600
+0037: 00000384      Retry interval:          900
+003b: 001baf80      Expiration limit:        1814400
+003f: 00000384      Minimum TTL:             0 day 00:15:00(900)
+
+0043:               Answer[1]:
+0043: c00c          Name:                    jp
+0045: 002e          Type:                    RRSIG(46)
+0047: 0001          Class:                   IN(1)
+0049: 00014824      Time to live:            0 day 23:20:04(84004)
+004d: 0096          data_length:             150
+004f: 0006          Type covered:            6
+0051: 0008          Algorithm:               SHA256(8)
+0052: 01            Labels:                  1
+0053: 00015180      Original TTL:            1 day 00:00:00(86400)
+0057: 5d486b1e      fld_Signature_expiration: 1565027102
+005b: 5d20de1e      Time signed:             1562435102
+005f: 0000017a      Id of signing key:       378
+0061: 026a7000
+                    Signer's name:           jp
+0065: a45d164c4e2a643d7533b2b8be4fc68696b238ee126675605c356c78e53724c53cbb62e74cbc1e8c6354f821b11c94a426b73245ec34e2e924992ade5a684ad3e44faec66ecb9fe367a0d5b4282e47e3d1125aa6f9cd4feece9eaca933228cc0f1c686351b9460869791a52eafc4baefcb25201c97ab732d97c8ad986b8ceac1
+                    Signature:               a4 5d 16 4c 4e 2a 64 3d 75 33 b2 b8 be 4f c6 86
+                                             96 b2 38 ee 12 66 75 60 5c 35 6c 78 e5 37 24 c5
+                                             3c bb 62 e7 4c bc 1e 8c 63 54 f8 21 b1 1c 94 a4
+                                             26 b7 32 45 ec 34 e2 e9 24 99 2a de 5a 68 4a d3
+                                             e4 4f ae c6 6e cb 9f e3 67 a0 d5 b4 28 2e 47 e3
+                                             d1 12 5a a6 f9 cd 4f ee ce 9e ac a9 33 22 8c c0
+                                             f1 c6 86 35 1b 94 60 86 97 91 a5 2e af c4 ba ef
+                                             cb 25 20 1c 97 ab 73 2d 97 c8 ad 98 6b 8c ea c1
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = NS
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x0098(152) bytes.
+Response time : 33.157825[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0008          Answer RRS:              8
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 0002          Type:                    NS(2)
+0012: 0001          Class:                   IN(1)
+
+0014:               Answer[0]:
+0014: c00c          Name:                    jp
+0016: 0002          Type:                    NS(2)
+0018: 0001          Class:                   IN(1)
+001a: 00010a37      Time to live:            0 day 18:55:51(68151)
+001e: 0008          data_length:             8
+0020: 016603646e73c00c  Name:                    f.dns[.jp]
+
+0028:               Answer[1]:
+0028: c00c          Name:                    jp
+002a: 0002          Type:                    NS(2)
+002c: 0001          Class:                   IN(1)
+002e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0032: 0004          data_length:             4
+0034: 0162c022      Name:                    b[.dns[.jp]]
+
+0038:               Answer[2]:
+0038: c00c          Name:                    jp
+003a: 0002          Type:                    NS(2)
+003c: 0001          Class:                   IN(1)
+003e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0042: 0004          data_length:             4
+0044: 0164c022      Name:                    d[.dns[.jp]]
+
+0048:               Answer[3]:
+0048: c00c          Name:                    jp
+004a: 0002          Type:                    NS(2)
+004c: 0001          Class:                   IN(1)
+004e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0052: 0004          data_length:             4
+0054: 0167c022      Name:                    g[.dns[.jp]]
+
+0058:               Answer[4]:
+0058: c00c          Name:                    jp
+005a: 0002          Type:                    NS(2)
+005c: 0001          Class:                   IN(1)
+005e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0062: 0004          data_length:             4
+0064: 0163c022      Name:                    c[.dns[.jp]]
+
+0068:               Answer[5]:
+0068: c00c          Name:                    jp
+006a: 0002          Type:                    NS(2)
+006c: 0001          Class:                   IN(1)
+006e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0072: 0004          data_length:             4
+0074: 0168c022      Name:                    h[.dns[.jp]]
+
+0078:               Answer[6]:
+0078: c00c          Name:                    jp
+007a: 0002          Type:                    NS(2)
+007c: 0001          Class:                   IN(1)
+007e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0082: 0004          data_length:             4
+0084: 0161c022      Name:                    a[.dns[.jp]]
+
+0088:               Answer[7]:
+0088: c00c          Name:                    jp
+008a: 0002          Type:                    NS(2)
+008c: 0001          Class:                   IN(1)
+008e: 00010a37      Time to live:            0 day 18:55:51(68151)
+0092: 0004          data_length:             4
+0094: 0165c022      Name:                    e[.dns[.jp]]
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = SOA
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x0043(67) bytes.
+Response time : 21.990061[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0001          Answer RRS:              1
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 0006          Type:                    SOA(6)
+0012: 0001          Class:                   IN(1)
+
+0014:               Answer[0]:
+0014: c00c          Name:                    jp
+0016: 0006          Type:                    SOA(6)
+0018: 0001          Class:                   IN(1)
+001a: 00014823      Time to live:            0 day 23:20:03(84003)
+001e: 0023          data_length:             35
+0020: 017a03646e73c00c
+                    Primary name server:     z.dns[.jp]
+0028: 04726f6f74c022 
+                    Responsible authoritys mailbox: root[.dns[.jp]]
+002f: 5d2a151a      Serial number:           1563039002
+0033: 00003600      Refresh interval:        3600
+0037: 00000384      Retry interval:          900
+003b: 001baf80      Expiration limit:        1814400
+003f: 00000384      Minimum TTL:             0 day 00:15:00(900)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = DNSKEY
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x0014(20) bytes.
+Response time : 124.415636[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8380          Flags:                   0b1000001110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (1) ... Flagment occur
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 0030          Type:                    DNSKEY(48)
+0012: 0001          Class:                   IN(1)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = DS
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x0068(104) bytes.
+Response time : 81.823349[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 002b          Type:                    DS(43)
+0012: 0001          Class:                   IN(1)
+
+0014:               Answer[0]:
+0014: c00c          Name:                    jp
+0016: 002b          Type:                    DS(43)
+0018: 0001          Class:                   IN(1)
+001a: 00015041      Time to live:            0 day 23:54:41(86081)
+001e: 0018          data_length:             24
+0020: d2f4          Key_id:                  54004
+0022: 08            Algorithm:               SHA256(8)
+0023: 01            Digest type:             SHA1(1)
+0024: 0ec348cc7e6d3213cc89e5867088043fc7d5c111
+                    Digest:                  0e c3 48 cc 7e 6d 32 13 cc 89 e5 86 70 88 04 3f
+                                             c7 d5 c1 11
+
+0038:               Answer[1]:
+0038: c00c          Name:                    jp
+003a: 002b          Type:                    DS(43)
+003c: 0001          Class:                   IN(1)
+003e: 00015041      Time to live:            0 day 23:54:41(86081)
+0042: 0024          data_length:             36
+0044: d2f4          Key_id:                  54004
+0046: 08            Algorithm:               SHA256(8)
+0047: 02            Digest type:             SHA256(2)
+0048: 5f4b24f667bc70880720d10df317dc8ff80c63e586d504e6bbfe53f0b9ecc040
+                    Digest:                  5f 4b 24 f6 67 bc 70 88 07 20 d1 0d f3 17 dc 8f
+                                             f8 0c 63 e5 86 d5 04 e6 bb fe 53 f0 b9 ec c0 40
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = NSEC3
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x0043(67) bytes.
+Response time : 70.999622[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0000          Answer RRS:              0
+0008: 0001          Authority RRS:           1
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 0032          Type:                    NSEC3(50)
+0012: 0001          Class:                   IN(1)
+
+0014:               Authority[0]:
+0014: c00c          Name:                    jp
+0016: 0006          Type:                    SOA(6)
+0018: 0001          Class:                   IN(1)
+001a: 000002f2      Time to live:            0 day 00:12:34(754)
+001e: 0023          data_length:             35
+0020: 017a03646e73c00c
+                    Primary name server:     z.dns[.jp]
+0028: 04726f6f74c022 
+                    Responsible authoritys mailbox: root[.dns[.jp]]
+002f: 5d2a151a      Serial number:           1563039002
+0033: 00003600      Refresh interval:        3600
+0037: 00000384      Retry interval:          900
+003b: 001baf80      Expiration limit:        1814400
+003f: 00000384      Minimum TTL:             0 day 00:15:00(900)
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = jp
+record type   = NSEC3PARAM
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x002a(42) bytes.
+Response time : 86.304665[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0001          Answer RRS:              1
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 026a7000      Name:                    jp
+0010: 0033          Type:                    NSEC3PARAM(51)
+0012: 0001          Class:                   IN(1)
+
+0014:               Answer[0]:
+0014: c00c          Name:                    jp
+0016: 0033          Type:                    NSEC3PARAM(51)
+0018: 0001          Class:                   IN(1)
+001a: 00000000      Time to live:            0 day 00:00:00(0)
+001e: 000a          data_length:             10
+0020: 01            Hash Algorithm:          SHA1(1)
+0021: 01            NSEC3 flags:             0
+0022: 0008          NSEC3 iterations:        8
+0024: 05            Salt length:             5
+0025: fe147a6d36    Salt value:              1091265260854
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = freebsd.org
+record type   = ANY
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x017b(379) bytes.
+Response time : 1789.845467[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8380          Flags:                   0b1000001110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (1) ... Flagment occur
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 0766726565627364036f726700  Name:                    freebsd.org
+0019: 00ff          Type:                    ANY(255)
+001b: 0001          Class:                   IN(1)
+
+001d:               Answer[0]:
+001d: c00c          Name:                    freebsd.org
+001f: 0006          Type:                    SOA(6)
+0021: 0001          Class:                   IN(1)
+0023: 00000d1d      Time to live:            0 day 00:55:57(3357)
+0027: 0027          data_length:             39
+0029: 036e7330c00c
+                    Primary name server:     ns0[.freebsd.org]
+002f: 0a686f73746d6173746572c00c 
+                    Responsible authoritys mailbox: hostmaster[.freebsd.org]
+003c: 78589555      Serial number:           2019071317
+0040: 00003600      Refresh interval:        3600
+0044: 00000384      Retry interval:          900
+0048: 00093a80      Expiration limit:        604800
+004c: 00000e10      Minimum TTL:             0 day 01:00:00(3600)
+
+0050:               Answer[1]:
+0050: c00c          Name:                    freebsd.org
+0052: 002e          Type:                    RRSIG(46)
+0054: 0001          Class:                   IN(1)
+0056: 00000d1d      Time to live:            0 day 00:55:57(3357)
+005a: 011f          data_length:             287
+005c: 0006          Type covered:            6
+005e: 0008          Algorithm:               SHA256(8)
+005f: 02            Labels:                  2
+0060: 00000e10      Original TTL:            0 day 01:00:00(3600)
+0064: 5d3c9c8d      fld_Signature_expiration: 1564253325
+0068: 5d2a0d5c      Time signed:             1563037020
+006c: 00006b9a      Id of signing key:       27546
+006e: 0766726565627364036f726700
+                    Signer's name:           freebsd.org
+007b: 9c9b24e57aa4457ca294a75fe2954fc1471cc6434ac485724ba03004780dae3e72f75c0ea05e2e358ad86f99b82c0cb3c120679897813307eec75476034cf2d1b9341a0bf7226cac47cd006cdf54e9a7196777282a624b845b91a1176b05f7046a71315aabfa5edcf358c12b81763c95c131df5d95248559ed91adf70375f00e29c2f13c7540ac23f6b547dc6285f86d337f21756c7075b1a28889ee80947ccddf9982ca04132b2563f9862704da0b7d7f5c054adfc8e57d52cdc33390c298d75c82218a18b867fd24509eb77d1e08f77cec3d3ea97474d2c9e6a44fd2afddce41cc4fd23e483afd4d42275202795a6edd5859873cdcec134cd8f9d6d8cab8ac
+                    Signature:               9c 9b 24 e5 7a a4 45 7c a2 94 a7 5f e2 95 4f c1
+                                             47 1c c6 43 4a c4 85 72 4b a0 30 04 78 0d ae 3e
+                                             72 f7 5c 0e a0 5e 2e 35 8a d8 6f 99 b8 2c 0c b3
+                                             c1 20 67 98 97 81 33 07 ee c7 54 76 03 4c f2 d1
+                                             b9 34 1a 0b f7 22 6c ac 47 cd 00 6c df 54 e9 a7
+                                             19 67 77 28 2a 62 4b 84 5b 91 a1 17 6b 05 f7 04
+                                             6a 71 31 5a ab fa 5e dc f3 58 c1 2b 81 76 3c 95
+                                             c1 31 df 5d 95 24 85 59 ed 91 ad f7 03 75 f0 0e
+                                             29 c2 f1 3c 75 40 ac 23 f6 b5 47 dc 62 85 f8 6d
+                                             33 7f 21 75 6c 70 75 b1 a2 88 89 ee 80 94 7c cd
+                                             df 99 82 ca 04 13 2b 25 63 f9 86 27 04 da 0b 7d
+                                             7f 5c 05 4a df c8 e5 7d 52 cd c3 33 90 c2 98 d7
+                                             5c 82 21 8a 18 b8 67 fd 24 50 9e b7 7d 1e 08 f7
+                                             7c ec 3d 3e a9 74 74 d2 c9 e6 a4 4f d2 af dd ce
+                                             41 cc 4f d2 3e 48 3a fd 4d 42 27 52 02 79 5a 6e
+                                             dd 58 59 87 3c dc ec 13 4c d8 f9 d6 d8 ca b8 ac
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = _http._tcp.update.freebsd.org
+record type   = SRV
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x007d(125) bytes.
+Response time : 13.152122[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 055f68747470045f746370067570646174650766726565627364036f726700  Name:                    _http._tcp.update.freebsd.org
+002b: 0021          Type:                    SRV(33)
+002d: 0001          Class:                   IN(1)
+
+002f:               Answer[0]:
+002f: c00c          Name:                    _http._tcp.update.freebsd.org
+0031: 0021          Type:                    SRV(33)
+0033: 0001          Class:                   IN(1)
+0035: 00000060      Time to live:            0 day 00:01:36(96)
+0039: 001b          data_length:             27
+003b: 0001          Priority:                1
+003d: 0032          Weight:                  50
+003f: 0050          Port:                    80
+0041: 07757064617465320766726565627364036f726700
+                    Target:                  update2.freebsd.org
+
+0056:               Answer[1]:
+0056: c00c          Name:                    _http._tcp.update.freebsd.org
+0058: 0021          Type:                    SRV(33)
+005a: 0001          Class:                   IN(1)
+005c: 00000060      Time to live:            0 day 00:01:36(96)
+0060: 001b          data_length:             27
+0062: 0001          Priority:                1
+0064: 0032          Weight:                  50
+0066: 0050          Port:                    80
+0068: 07757064617465310766726565627364036f726700
+                    Target:                  update1.freebsd.org
+============================================================================================
+Finish reading.
+============================================================================================
+DNS Server    = 192.168.100.1:53
+resolv string = freebsd.org
+record type   = CAA
+============================================================================================
+Reply from    : 192.168.100.1:53
+length        : 0x005e(94) bytes.
+Response time : 29.969692[ms]
+============================================================================================
+0000:               Header:         
+0000: 0001          Transaction ID:          1
+0002: 8180          Flags:                   0b1000000110000000
+/*
+                      [bit 0]     QR      (1) ... Response
+                      [bit 1-4]   OPCODE  (0) ... standard query
+                      [bit 5]     AA      (0) ... Not Authoritative
+                      [bit 6]     TC      (0) ... Did not Flagment
+                      [bit 7]     RD      (1) ... Repeat Query
+                      [bit 8]     RA      (1) ... Recursion Available is False
+                      [bit 9]     Reserve (0)
+                      [bit 10]    Authentic Data(0)
+                      [bit 11]    Checking Disable(0)
+                      [bit 12-15] RCODE   (0) ... No Error
+*/
+0004: 0001          Questions:               1
+0006: 0002          Answer RRS:              2
+0008: 0000          Authority RRS:           0
+000a: 0000          Additional RRS:          0
+
+000c:               Querys:
+000c: 0766726565627364036f726700  Name:                    freebsd.org
+0019: 0101          Type:                    CAA(257)
+001b: 0001          Class:                   IN(1)
+
+001d:               Answer[0]:
+001d: c00c          Name:                    freebsd.org
+001f: 0101          Type:                    CAA(257)
+0021: 0001          Class:                   IN(1)
+0023: 000004b7      Time to live:            0 day 00:20:07(1207)
+0027: 0013          data_length:             19
+0029: 00056973737565636f6d6f646f63612e636f6d Data:        b'\x00\x05issuecomodoca.com'
+
+003c:               Answer[1]:
+003c: c00c          Name:                    freebsd.org
+003e: 0101          Type:                    CAA(257)
+0040: 0001          Class:                   IN(1)
+0042: 000004b7      Time to live:            0 day 00:20:07(1207)
+0046: 0016          data_length:             22
+0048: 000569737375656c657473656e63727970742e6f7267 Data:        b'\x00\x05issueletsencrypt.org'
+============================================================================================
+Finish reading.
