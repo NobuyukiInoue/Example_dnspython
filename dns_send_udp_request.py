@@ -509,7 +509,7 @@ def get_answer(data, i, title, record_length):
 
             fld_Responsivle_authoritys_mailbox, length = get_name(data, i)
             format_str = "{0:04x}: {1:0" + str(2*length) + "x} \n {2:18} {3:<24} {4}"
-            print(format_str.format(i, int.from_bytes(data[i:i + length], 'big'), "", "Responsivle authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
+            print(format_str.format(i, int.from_bytes(data[i:i + length], 'big'), "", "Responsible authoritys mailbox:", fld_Responsivle_authoritys_mailbox))
             i += length
 
             Serial_number = (data[i] << 24) + (data[i + 1] << 16) + (data[i + 2] << 8) + data[i + 3]
@@ -585,12 +585,11 @@ def get_answer(data, i, title, record_length):
             i += result_length
 
             signature_size = fld_data_length - (i - i_start)
-
-            i_current = i
-            i, result = get_signature(data, i, signature_size)
+            result, _ = get_signature(data, i, signature_size)
             format_str = "{0:04x}: {1:0" + str(2*signature_size) + "x}\n" + " {2:18} {3:<24}"
-            print(format_str.format(i_current, int.from_bytes(data[i_current:i_current + signature_size], 'big'), "", "Signature:"), end = "")
+            print(format_str.format(i, int.from_bytes(data[i:i + signature_size], 'big'), "", "Signature:"), end = "")
             print_result(result)
+            i += signature_size
 
         elif type_name == "DNSKEY":
             i_start = i
@@ -751,12 +750,13 @@ def get_name(data, i):
 
 
 def get_signature(data, i, size):
+    current_i = i
     result = ""
     max_i = i + size
     while i < max_i:
         result += chr(data[i])
         i += 1
-    return i, result
+    return result, i - current_i 
 
 
 def print_result(target_str):

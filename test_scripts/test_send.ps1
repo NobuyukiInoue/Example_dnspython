@@ -15,18 +15,18 @@ if (Test-Path $logfile) {
 }
 
 $records = @()
-$records += @(".", "any")
-$records += @(".", "ns")
-$records += @("jp", "any")
-$records += @("jp", "ns")
-$records += @("jp", "soa")
-$records += @("jp", "dnskey")
-$records += @("jp", "ds")
-$records += @("jp", "nsec3")
-$records += @("jp", "nsec3param")
-$records += @("freebsd.org", "any")
-$records += @("_http._tcp.update.freebsd.org", "srv")
-$records += @("freebsd.org", "caa")
+$records += ,@(".", "any")
+$records += ,@(".", "ns")
+$records += ,@("jp", "any")
+$records += ,@("jp", "ns")
+$records += ,@("jp", "soa")
+$records += ,@("jp", "dnskey")
+$records += ,@("jp", "ds")
+$records += ,@("jp", "nsec3")
+$records += ,@("jp", "nsec3param")
+$records += ,@("freebsd.org", "any")
+$records += ,@("_http._tcp.update.freebsd.org", "srv")
+$records += ,@("freebsd.org", "caa")
 
 foreach($record in $records) {
       python $target_program $dnsserver $record[0] $record[1] | Out-File -Append $logfile -Encoding ascii
