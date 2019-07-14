@@ -17,36 +17,43 @@ else {
     }
 }
 
-$target_program = "..\dns_send_udp_request.py"
+$target_program = "../dns_send_udp_request.py"
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$logfile = ".\log\result_" + $timestamp + ".log"
+$logfile = "./log/result_" + $timestamp + ".log"
 
 if (Test-Path $logfile) {
     Write-Host "$lofile is exist."
     exit
 }
 
-$records = @()
-$records += ,@(".", "any")
-$records += ,@(".", "ns")
-$records += ,@("jp", "any")
-$records += ,@("jp", "ns")
-$records += ,@("jp", "soa")
-$records += ,@("jp", "dnskey")
-$records += ,@("jp", "ds")
-$records += ,@("jp", "nsec3")
-$records += ,@("jp", "nsec3param")
-$records += ,@("freebsd.org", "any")
-$records += ,@("_http._tcp.update.freebsd.org", "srv")
-$records += ,@("freebsd.org", "caa")
+$records = @( `
+    @(".", "any"), `
+    @(".", "ns"), `
+    @("jp", "any"), `
+    @("jp", "ns"), `
+    @("jp", "soa"), `
+    @("jp", "dnskey"), `
+    @("jp", "ds"), `
+    @("jp", "nsec3"), `
+    @("jp", "nsec3param"), `
+    @("freebsd.org", "any"), `
+    @("_http._tcp.update.freebsd.org", "srv"), `
+    @("freebsd.org", "caa") `
+)
+
+Write-Host "DNSSERVER = $dnsserver\n"
 
 if ($ENABLE_OUTPUT_LOG) {
+    Write-Host "LOGFILE = $logfile"
+
     foreach($record in $records) {
+        Write-Host "Execute: python $target_program $dnsserver $record[0] $record[1] | Out-File -Append $logfile -Encoding ascii"
         python $target_program $dnsserver $record[0] $record[1] | Out-File -Append $logfile -Encoding ascii
     }
 }
 else {
     foreach($record in $records) {
+        Write-Host "Execute: python $target_program $dnsserver $record[0] $record[1]"
         python $target_program $dnsserver $record[0] $record[1]
     }
 }
