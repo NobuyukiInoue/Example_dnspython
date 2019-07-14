@@ -17,6 +17,7 @@ python dns_send_udp_request.py [dns server] [resolv string] [record type]
 * CNAME(5)
 * SOA(6)
 * PTR(12)
+* HINFO(13)
 * MX(15)
 * TXT(16)
 * AAAA(28)

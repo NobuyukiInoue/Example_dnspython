@@ -1,0 +1,14 @@
+. any
+. ns
+jp any
+jp ns
+jp soa
+jp dnskey
+jp ds
+jp nsec3
+jp nsec3param
+freebsd.org any
+_http._tcp.update.freebsd.org srv
+freebsd.org caa
+linux.org hinfo
+linux.org any

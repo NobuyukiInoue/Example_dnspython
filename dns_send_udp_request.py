@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # Usage: python dns_send_udp_request.py [dns server] [resolv string] [record type]
@@ -146,6 +147,8 @@ def set_type(type):
         return 0x0006.to_bytes(2, 'big')
     elif type == 'PTR':
         return 0x000c.to_bytes(2, 'big')
+    elif type == 'HINFO':
+        return 0x000d.to_bytes(2, 'big')
     elif type == 'MX':
         return 0x000f.to_bytes(2, 'big')
     elif type == 'TXT':
@@ -192,6 +195,8 @@ def get_type(int_type):
         return "SOA"
     elif int_type == 12:
         return "PTR"
+    elif int_type == 13:
+        return "HINFO"
     elif int_type == 15:
         return "MX"
     elif int_type == 16:
@@ -330,7 +335,7 @@ def print_recv_data(data):
     print("\n"
           "{0:04x}: {1:13} {2}".format(i, "", "Querys:"))
     # Name:
-    i = print_name(data, i)
+    i = print_name(data, "Name:", i)
 
     fld_type = (data[i] << 8) + data[i + 1]
     print("{0:04x}: {1:04x} {2:8} {3:<24} {4}({5:d})".format(i, fld_type, "", "Type:", get_type(fld_type), fld_type))
@@ -428,17 +433,17 @@ def print_flags(flags):
     print("*/")
 
 
-def print_name(data, i):
+def print_name(data, title, i):
     fld_name, name_length = get_name(data, i)
 
     if data[i] == 0x00:
-        print("{0:04x}: {1:02x} {2:10} {3:<24} {4:}".format(i, data[i], "", "Name:", "<Root>"))
+        print("{0:04x}: {1:02x} {2:10} {3:<24} {4:}".format(i, data[i], "", title, "<Root>"))
     else:
         if 2*name_length < 13:
             format_str = "{0:04x}: {1:0" + str(2*name_length) + "x} {2:" + str(13 - 2*name_length) + "}{3:<24} {4}"
         else:
             format_str = "{0:04x}: {1:0" + str(2*name_length) + "x} {2} {3:<24} {4}"
-        print(format_str.format(i, int.from_bytes(data[i:i + name_length], 'big') , "", "Name:", fld_name))
+        print(format_str.format(i, int.from_bytes(data[i:i + name_length], 'big') , "", title, fld_name))
 
     i += name_length
 
@@ -489,7 +494,11 @@ def get_answer(data, i, title, record_length):
 
         if type_name == "NS":
             # Name:
-            i = print_name(data, i)
+            i = print_name(data, "Name:",  i)
+
+        elif type_name == "HINFO":
+            # Name:
+            i = print_name(data, "HINFO:", i)
 
         elif type_name == "MX":
             fld_Preference = (data[i] << 8) + data[i + 1]
@@ -693,6 +702,22 @@ def get_answer(data, i, title, record_length):
             format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
             print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big') ,"", "Domain Name:", result))
             i += result_length
+
+        elif type_name == "CAA":
+            i_start = i
+
+            print("{0:04x}: {1:04x} {2:8} {3:<24} {1:d}".format(i, data[i], "", "CAA Flags:"))
+            i += 1
+
+            result, result_length = get_name(data, i)
+            format_str = "{0:04x}: {1:0" + str(2*result_length) + "x}\n {2:18} {3:<24} {4}"
+            print(format_str.format(i, int.from_bytes(data[i:i + result_length], 'big') ,"", "Issue Tag:", result))
+            i += result_length
+
+            fld_issue_value = data[i:i + fld_data_length - (i - i_start)]
+            format_str = "{0:04x}: {1:0" + str(2*len(fld_issue_value)) + "x} {2:12} {3}"
+            print(format_str.format(i, int.from_bytes(fld_issue_value, 'big'), "Issue Value:", fld_issue_value))
+            i += len(fld_issue_value)
 
         else:
             fld_other = data[i:i + fld_data_length]

@@ -1,16 +1,23 @@
 #!/bin/bash
 
-if [ $# -lt 1 ]; then
-    printf "Usage) ${0} [DNSSERVER] [TRUE | FALSE]\n"
+if [ $# -lt 2 ]; then
+    printf "Usage) ${0} [testdata.txt] [DNSSERVER] [TRUE | FALSE]\n"
     exit
 fi
 
-DNSSERVER=${1}
+if [ ! -f ${1} ]; then
+    printf "${1} is not exist.\n"
+    exit
+fi
 
-if [ $# -lt 2 ]; then
+DNSSERVER=${2}
+
+if [ $# -lt 3 ]; then
     ENABLE_OUTPUT_LOG=false
 else
-    if [ ${2^^} -eq "TRUE" ]; then
+#   if [ ${3^^} = "TRUE" ]; then    # bash4.0 later
+    temp=`tr '[a-z]' '[A-Z]' <<< ${3}`
+    if [ $temp = "TRUE" ]; then
         ENABLE_OUTPUT_LOG=true
     else
         ENABLE_OUTPUT_LOG=false
@@ -28,33 +35,31 @@ if [ -f $LOGFILE ]; then
     exit
 fi
 
-RECORDS=(
-". any"
-". ns"
-"jp any"
-"jp ns"
-"jp soa"
-"jp dnskey"
-"jp ds"
-"jp nsec3"
-"jp nsec3param"
-"freebsd.org any"
-"_http._tcp.update.freebsd.org srv"
-"freebsd.org caa"
-)
+# 区切り文字を改行コードに指定
+IFS=$'\n'
+RECORDS=(`cat ${1}`)
 
-printf "DNSSERVER=${DNSSERVER}\n"
+printf "DNSSERVER = ${DNSSERVER}\n"
+
+# 区切り文字をスペースに変更
+IFS=' '
 
 if "${ENABLE_OUTPUT_LOG}"; then
     printf "LOGFILE=${LOGFILE}\n"
 
     for RECORD in "${RECORDS[@]}"; do
-        printf "python ${TARGET_PROGRAM} ${DNSSERVER} ${RECORD[0]} ${RECORD[1]} >> $LOGFILE\n"
-        python ${TARGET_PROGRAM} ${DNSSERVER} ${RECORD[0]} ${RECORD[1]} >> $LOGFILE
+        # split実行
+        set -- ${RECORD}
+
+        printf "python ${TARGET_PROGRAM} ${DNSSERVER} ${1} ${2} >> $LOGFILE\n"
+        python ${TARGET_PROGRAM} ${DNSSERVER} ${1} ${2} >> $LOGFILE
     done
 else
     for RECORD in "${RECORDS[@]}"; do
-        printf "python ${TARGET_PROGRAM} ${DNSSERVER} ${RECORD[0]} ${RECORD[1]}\n"
-        python ${TARGET_PROGRAM} ${DNSSERVER} ${RECORD[0]} ${RECORD[1]}
+        # split実行
+        set -- ${RECORD}
+
+        printf "python ${TARGET_PROGRAM} ${DNSSERVER} ${1} ${2}\n"
+        python ${TARGET_PROGRAM} ${DNSSERVER} ${1} ${2}
     done
 fi
